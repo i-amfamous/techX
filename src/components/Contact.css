@@ -1,0 +1,546 @@
+/* ==========================================================================
+   Contact · inquiry form on a soft surface
+   ========================================================================== */
+
+.contact {
+  background: var(--page-2);
+}
+
+.contact__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.82fr) minmax(0, 1.18fr);
+  gap: clamp(32px, 4.5vw, 64px);
+  align-items: start;
+}
+
+.contact__lede {
+  max-width: 44ch;
+  margin-top: 18px;
+  color: var(--body);
+  font-size: 0.98rem;
+  line-height: 1.65;
+}
+
+.contact__next {
+  margin-top: 30px;
+  padding-top: 24px;
+  border-top: 1px solid var(--line);
+}
+
+.contact__next .micro {
+  display: block;
+  margin-bottom: 13px;
+}
+
+.contact__next ol {
+  display: flex;
+  flex-direction: column;
+  gap: 11px;
+}
+
+.contact__next li {
+  display: flex;
+  gap: 11px;
+  color: var(--body);
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+.contact__next li span {
+  color: var(--accent-ink);
+  font-size: 0.74rem;
+  font-weight: 600;
+  line-height: 1.75;
+  font-variant-numeric: tabular-nums;
+}
+
+.contact__details {
+  margin-top: 30px;
+  padding: 22px;
+  border-radius: 18px;
+  background: var(--ink);
+  color: #f6f6f1;
+}
+
+.contact__details-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.contact__details .micro {
+  color: rgba(246, 246, 241, 0.46);
+}
+
+.contact__details-tag {
+  padding: 3px 8px;
+  border: 1px solid var(--line-dark);
+  border-radius: 999px;
+  font-size: 0.64rem;
+}
+
+.contact__details dl {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 15px;
+}
+
+.contact__details dl > div {
+  display: grid;
+  grid-template-columns: 5rem minmax(0, 1fr);
+  gap: 10px;
+  align-items: baseline;
+}
+
+.contact__details dt {
+  color: rgba(246, 246, 241, 0.45);
+  font-size: 0.76rem;
+}
+
+.contact__details dd {
+  font-size: 0.86rem;
+  line-height: 1.5;
+}
+
+.contact__detail-link {
+  border-bottom: 1px solid rgba(246, 246, 241, 0.3);
+  transition: border-color 0.25s var(--ease);
+}
+
+.contact__detail-link:hover {
+  border-color: var(--accent);
+}
+
+.contact__social {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.contact__details .placeholder {
+  border-color: var(--line-dark);
+  color: rgba(246, 246, 241, 0.6);
+  font-size: 0.74rem;
+}
+
+.contact__details-note {
+  margin-top: 16px;
+  padding-top: 14px;
+  border-top: 1px solid var(--line-dark);
+  color: rgba(246, 246, 241, 0.42);
+  font-size: 0.74rem;
+  line-height: 1.55;
+}
+
+/* --------------------------------------------------------------------------
+   Form card
+   -------------------------------------------------------------------------- */
+
+.contact-form,
+.contact-result {
+  padding: clamp(22px, 3vw, 34px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.contact-form__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
+  padding-bottom: 18px;
+  border-bottom: 1px solid var(--line);
+}
+
+.contact-form__title {
+  font-family: var(--font-display);
+  font-size: clamp(1.25rem, 1.9vw, 1.5rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+}
+
+.contact-form__demo-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 9px;
+  margin-bottom: 20px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  background: var(--accent-wash);
+  color: var(--accent-ink);
+  font-size: 0.8rem;
+  line-height: 1.5;
+}
+
+.contact-form__demo-note svg {
+  flex: none;
+  margin-top: 1px;
+}
+
+.contact-form__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.field {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.field--full {
+  grid-column: 1 / -1;
+}
+
+.field label,
+.field legend {
+  color: var(--ink);
+  font-size: 0.82rem;
+  font-weight: 500;
+  line-height: 1.4;
+}
+
+.field label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.field__req {
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+
+.field__optional {
+  margin-left: auto;
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 400;
+}
+
+.field input,
+.field textarea,
+.field select {
+  width: 100%;
+  padding: 0.78rem 0.9rem;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--page);
+  color: var(--ink);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  transition:
+    border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    box-shadow 0.25s var(--ease);
+}
+
+.field input::placeholder,
+.field textarea::placeholder {
+  color: var(--muted);
+}
+
+.field input:focus,
+.field textarea:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--ink);
+  background: #ffffff;
+  box-shadow: 0 0 0 3px rgba(12, 15, 13, 0.07);
+}
+
+.field input[aria-invalid='true'],
+.field textarea[aria-invalid='true'] {
+  border-color: #b23a12;
+}
+
+.field textarea {
+  min-height: 132px;
+  resize: vertical;
+}
+
+.field__hint {
+  color: var(--muted);
+  font-size: 0.76rem;
+  line-height: 1.5;
+}
+
+.field__error {
+  color: #a8330e;
+  font-size: 0.78rem;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+/* Service choice chips */
+.field--choices {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.field--choices legend {
+  margin-bottom: 9px;
+}
+
+.choice-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.choice {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+  padding: 10px 12px;
+  border: 1px solid var(--line);
+  border-radius: 11px;
+  background: var(--page);
+  color: var(--body);
+  font-size: 0.84rem;
+  line-height: 1.4;
+  cursor: pointer;
+  transition:
+    border-color 0.25s var(--ease),
+    background-color 0.25s var(--ease),
+    color 0.25s var(--ease);
+}
+
+.choice:hover {
+  border-color: var(--line-strong);
+}
+
+.choice:has(input:checked) {
+  border-color: var(--ink);
+  background: #ffffff;
+  color: var(--ink);
+}
+
+.choice input {
+  /* Kept in the DOM and focusable, hidden visually. The focus ring is drawn on
+     the adjacent box, so keyboard users still see where they are. */
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+}
+
+.choice__box {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--line-strong);
+  border-radius: 5px;
+  background: #ffffff;
+  color: transparent;
+  transition:
+    background-color 0.2s var(--ease),
+    border-color 0.2s var(--ease),
+    color 0.2s var(--ease);
+}
+
+.choice input:checked + .choice__box {
+  border-color: var(--accent);
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.choice input:focus-visible + .choice__box {
+  outline: 2px solid var(--ink);
+  outline-offset: 2px;
+}
+
+.select-wrap {
+  position: relative;
+}
+
+.select-wrap select {
+  padding-right: 2.5rem;
+  appearance: none;
+  cursor: pointer;
+}
+
+.select-wrap__icon {
+  position: absolute;
+  top: 50%;
+  right: 0.9rem;
+  transform: translateY(-50%);
+  color: var(--muted);
+  pointer-events: none;
+}
+
+.contact-form__trap {
+  display: none;
+}
+
+.contact-form__error {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 10px;
+  background: #fbe4da;
+  color: #8f2c0b;
+  font-size: 0.82rem;
+  line-height: 1.5;
+}
+
+.contact-form__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.contact-form__submit {
+  min-height: 50px;
+  padding-inline: 1.4rem;
+}
+
+.contact-form__submit:disabled {
+  cursor: progress;
+  opacity: 0.7;
+}
+
+.contact-form__privacy {
+  max-width: 34ch;
+  color: var(--muted);
+  font-size: 0.74rem;
+  line-height: 1.5;
+}
+
+/* --------------------------------------------------------------------------
+   Demo / success result
+   -------------------------------------------------------------------------- */
+
+.contact-result {
+  display: flex;
+  flex-direction: column;
+}
+
+.contact-result__label {
+  color: var(--accent-ink);
+}
+
+.contact-result__title {
+  margin-top: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.15;
+}
+
+.contact-result__copy {
+  margin-top: 12px;
+  color: var(--body);
+  font-size: 0.92rem;
+  line-height: 1.62;
+}
+
+.contact-result__copy code {
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: var(--page-2);
+  color: var(--ink);
+  font-size: 0.86em;
+}
+
+.contact-result__preview {
+  max-height: 250px;
+  margin-top: 16px;
+  overflow: auto;
+  padding: 16px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: #f6f6f1;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  line-height: 1.6;
+  white-space: pre-wrap;
+}
+
+.contact-result__feedback {
+  margin-top: 12px;
+  color: var(--accent-ink);
+  font-size: 0.8rem;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.contact-result__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 22px;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 980px) {
+  .contact__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .contact__lede {
+    max-width: 60ch;
+  }
+
+  .contact__details {
+    max-width: 520px;
+  }
+}
+
+@media (max-width: 560px) {
+  .contact-form,
+  .contact-result {
+    padding: 20px;
+    border-radius: 18px;
+  }
+
+  .contact-form__grid {
+    grid-template-columns: 1fr;
+  }
+
+  .choice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .contact-form__foot {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .contact-form__submit {
+    width: 100%;
+    justify-content: space-between;
+  }
+
+  .contact-form__privacy {
+    max-width: none;
+  }
+
+  .contact__details {
+    padding: 18px;
+  }
+
+  .contact__details dl > div {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+}

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- Matches --page in base.css so mobile browser chrome blends with the page. -->
+    <meta name="theme-color" content="#fbfbf8" />
+    <title>TechX · Technology &amp; creative studio</title>
+    <meta
+      name="description"
+      content="TechX is a technology and creative studio for companies. We design and build web applications, iOS and Android apps, and brand identities."
+    />
+
+    <!-- Social sharing. Replace og:image with the absolute URL once the domain is known. -->
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="TechX" />
+    <meta property="og:title" content="TechX · Technology &amp; creative studio" />
+    <meta
+      property="og:description"
+      content="Web applications, iOS and Android apps, and brand identities, designed and built as one joined-up studio."
+    />
+    <meta property="og:image" content="/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="TechX: Ideas, made useful." />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="TechX · Technology &amp; creative studio" />
+    <meta
+      name="twitter:description"
+      content="Web applications, iOS and Android apps, and brand identities, designed and built as one joined-up studio."
+    />
+    <meta name="twitter:image" content="/og-image.png" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+
+    <!--
+      Inter only, and only the four weights the design uses. The site has no
+      italic styles by design, so no italic axis is requested.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!--
+      Structured data for search engines. It describes only what is publicly
+      known: a name, a description and three services. No address, URL, rating,
+      price or founding date is invented. Add real values only when they exist.
+    -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Organization",
+        "name": "TechX",
+        "description": "Technology and creative studio for companies, offering web application development, iOS and Android app development, and graphic design including brand identity.",
+        "hasOfferCatalog": {
+          "@type": "OfferCatalog",
+          "name": "Studio services",
+          "itemListElement": [
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Web application development"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "iOS and Android app development"
+              }
+            },
+            {
+              "@type": "Offer",
+              "itemOffered": {
+                "@type": "Service",
+                "name": "Graphic design and brand identity"
+              }
+            }
+          ]
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

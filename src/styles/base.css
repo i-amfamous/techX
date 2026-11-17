@@ -1,0 +1,557 @@
+/* ==========================================================================
+   TechX · base styles
+   Solid-colour design system. Inter throughout. No gradients, no italics.
+   ========================================================================== */
+
+:root {
+  /*
+    Solid palette. Two orange tokens on purpose: `--accent` is the fill colour
+    for buttons and marks, `--accent-ink` is the darker text-safe version used
+    on light surfaces. Swapping one for the other usually breaks contrast.
+  */
+  --page: #fbfbf8;
+  --page-2: #f4f4ef;
+  --card: #ffffff;
+  --cream: #f0eee4;
+  --sage: #e3ead9;
+  --ink: #0c0f0d;
+  --ink-2: #151a16;
+  --ink-3: #202622;
+  --body: #575e58;
+  --muted: #7b827c;
+  --line: #e4e5dd;
+  --line-strong: #cdd0c5;
+  --line-dark: rgba(251, 251, 248, 0.14);
+  --line-dark-soft: rgba(251, 251, 248, 0.07);
+  --accent: #ff4a17;
+  --accent-ink: #c03a0d;
+  --accent-wash: #ffece4;
+  --focus: #0c0f0d;
+
+  /* Type · Inter, as the reference */
+  --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --font-display: var(--font-sans);
+
+  /* Layout */
+  --max: 1240px;
+  --gutter: clamp(20px, 4.4vw, 48px);
+  --radius: 24px;
+  --radius-md: 18px;
+  --radius-sm: 12px;
+  --header-h: 72px;
+
+  /* Motion */
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out: cubic-bezier(0.22, 0.61, 0.36, 1);
+
+  color-scheme: light;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+* {
+  margin: 0;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: calc(var(--header-h) + 22px);
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ink);
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  line-height: 1.6;
+  font-synthesis-weight: none;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: clip;
+  text-rendering: optimizeLegibility;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+img,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+button,
+input,
+select,
+textarea {
+  font: inherit;
+  color: inherit;
+}
+
+button {
+  cursor: pointer;
+  background: none;
+  border: 0;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+ul,
+ol {
+  list-style: none;
+  padding: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+p {
+  overflow-wrap: break-word;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  line-height: 1.05;
+  font-style: normal;
+}
+
+em,
+i {
+  font-style: normal;
+}
+
+::selection {
+  background: var(--accent);
+  color: #ffffff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--focus);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.on-ink {
+  /* Dark bands need a light focus ring, otherwise focus disappears. */
+  --focus: #fbfbf8;
+  color: #f6f6f1;
+}
+
+/* --------------------------------------------------------------------------
+   Layout helpers
+   -------------------------------------------------------------------------- */
+
+.container {
+  width: min(100% - (var(--gutter) * 2), var(--max));
+  margin-inline: auto;
+}
+
+.section {
+  position: relative;
+  padding-block: clamp(78px, 9vw, 132px);
+}
+
+.section--flush-top {
+  padding-top: 0;
+}
+
+.section-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 0.72fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 64px);
+}
+
+.section-head--center {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  margin-bottom: clamp(40px, 5vw, 68px);
+  text-align: center;
+}
+
+.section-head--center .section-title {
+  max-width: 22ch;
+}
+
+.section-head--center .section-lede {
+  margin-top: 20px;
+  max-width: 58ch;
+}
+
+.section-head__aside .section-lede {
+  max-width: 44ch;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(2.4rem, 4.6vw, 4rem);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.05em;
+  text-wrap: balance;
+}
+
+/* `<em>` is a colour accent, never italics. That is why the site can use it
+   inside headings without breaking the all-upright type system. */
+.section-title em {
+  color: var(--accent-ink);
+  font-style: normal;
+  font-weight: inherit;
+}
+
+.on-ink .section-title em {
+  color: var(--accent);
+}
+
+.section-lede {
+  max-width: 52ch;
+  color: var(--body);
+  font-size: clamp(1rem, 1.1vw, 1.06rem);
+  line-height: 1.65;
+}
+
+.on-ink .section-lede {
+  color: rgba(246, 246, 241, 0.66);
+}
+
+/* --------------------------------------------------------------------------
+   Type details
+   -------------------------------------------------------------------------- */
+
+.serif {
+  font-family: var(--font-display);
+  font-style: normal;
+  font-weight: 600;
+  letter-spacing: -0.03em;
+}
+
+.micro {
+  color: var(--muted);
+  font-size: 0.72rem;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  line-height: 1.4;
+}
+
+.on-ink .micro {
+  color: rgba(246, 246, 241, 0.5);
+}
+
+/* Small × mark used as the studio's recurring motif */
+.xmark {
+  display: inline-block;
+  flex: none;
+  width: 0.72em;
+  height: 0.72em;
+  color: inherit;
+}
+
+/* --------------------------------------------------------------------------
+   Buttons and links
+   -------------------------------------------------------------------------- */
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.6rem;
+  min-height: 48px;
+  padding: 0.8rem 1.3rem;
+  border: 1px solid transparent;
+  border-radius: 999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: -0.01em;
+  line-height: 1;
+  transition:
+    background-color 0.28s var(--ease),
+    color 0.28s var(--ease),
+    border-color 0.28s var(--ease),
+    transform 0.28s var(--ease),
+    box-shadow 0.28s var(--ease);
+}
+
+.btn__icon {
+  flex: none;
+  transition: transform 0.32s var(--ease);
+}
+
+.btn:hover .btn__icon {
+  transform: translate(2px, -2px);
+}
+
+.btn__arrow {
+  display: inline-block;
+  transition: transform 0.32s var(--ease);
+}
+
+.btn:hover .btn__arrow {
+  transform: translate(3px, -3px);
+}
+
+.btn:active {
+  transform: translateY(1px) scale(0.99);
+}
+
+.btn--ink {
+  background: var(--ink);
+  color: #fbfbf8;
+}
+
+.btn--ink:hover {
+  background: var(--ink-3);
+  box-shadow: 0 12px 28px -14px rgba(12, 15, 13, 0.55);
+}
+
+.btn--accent {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn--accent:hover {
+  background: #ff5f31;
+  box-shadow: 0 14px 30px -16px rgba(255, 74, 23, 0.7);
+}
+
+.btn--bone {
+  background: var(--page);
+  color: var(--ink);
+}
+
+.btn--bone:hover {
+  background: var(--accent);
+  color: var(--ink);
+}
+
+.btn--outline {
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn--outline:hover {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: #fbfbf8;
+}
+
+.btn--outline-light {
+  border-color: rgba(251, 251, 248, 0.24);
+  color: #fbfbf8;
+}
+
+.btn--outline-light:hover {
+  border-color: rgba(251, 251, 248, 0.24);
+  background: #fbfbf8;
+  color: var(--ink);
+}
+
+.text-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--ink);
+  font-size: 0.85rem;
+  font-weight: 500;
+  line-height: 1.3;
+  transition:
+    color 0.28s var(--ease),
+    gap 0.28s var(--ease);
+}
+
+.text-link svg {
+  flex: none;
+  transition: transform 0.32s var(--ease);
+}
+
+.text-link:hover {
+  color: var(--accent-ink);
+}
+
+.text-link:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.on-ink .text-link {
+  color: #f6f6f1;
+}
+
+.on-ink .text-link:hover {
+  color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Reveal on scroll
+
+   `useReveal` adds `is-revealed` once per section. Everything below is pure
+   CSS so the timing is inspectable and reduced-motion can neutralise it with a
+   single override at the bottom of this file.
+   -------------------------------------------------------------------------- */
+
+.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.7s var(--ease),
+    transform 0.7s var(--ease);
+  transition-delay: var(--reveal-delay, 0ms);
+}
+
+.is-revealed .reveal {
+  opacity: 1;
+  transform: none;
+}
+
+/* --------------------------------------------------------------------------
+   Accessibility helpers
+   -------------------------------------------------------------------------- */
+
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+.skip-link {
+  position: fixed;
+  top: 12px;
+  left: 12px;
+  z-index: 200;
+  padding: 0.75rem 1rem;
+  transform: translateY(-160%);
+  border-radius: 10px;
+  background: var(--ink);
+  color: #fbfbf8;
+  font-size: 0.85rem;
+  font-weight: 500;
+  transition: transform 0.25s var(--ease);
+}
+
+.skip-link:focus-visible {
+  transform: translateY(0);
+}
+
+/* Visible signal that a value is still waiting on the studio, not a broken
+   layout. The dashed outline makes unfinished content read as deliberate. */
+.placeholder {
+  display: inline-block;
+  padding: 0.15rem 0.45rem;
+  border: 1px dashed var(--line-strong);
+  border-radius: 5px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-style: normal;
+  line-height: 1.45;
+}
+
+.on-ink .placeholder {
+  border-color: var(--line-dark);
+  color: rgba(246, 246, 241, 0.55);
+}
+
+/* --------------------------------------------------------------------------
+   Responsive + motion preferences
+   -------------------------------------------------------------------------- */
+
+@media (max-width: 980px) {
+  .section-head {
+    grid-template-columns: 1fr;
+    align-items: start;
+  }
+
+  .section-head__aside .section-lede {
+    max-width: 60ch;
+  }
+}
+
+@media (max-width: 700px) {
+  :root {
+    --header-h: 64px;
+    --radius: 20px;
+  }
+
+  .section {
+    padding-block: clamp(64px, 15vw, 92px);
+  }
+
+  .section-title {
+    font-size: clamp(2.1rem, 8.8vw, 3rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  /* Kill motion globally rather than per component. Section files should not
+     need their own reduced-motion blocks for ordinary transitions. */
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --------------------------------------------------------------------------
+   Wordmark
+   -------------------------------------------------------------------------- */
+
+.wordmark {
+  display: inline-flex;
+  align-items: flex-start;
+  color: inherit;
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 700;
+  letter-spacing: -0.055em;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.wordmark__x {
+  margin-left: -0.015em;
+  color: var(--accent);
+  font-weight: 700;
+  letter-spacing: 0;
+}
+
+.wordmark__reg {
+  margin-top: 0.16em;
+  margin-left: 0.22em;
+  font-size: 0.34em;
+  font-weight: 500;
+  letter-spacing: 0;
+}

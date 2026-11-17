@@ -1,0 +1,134 @@
+/* ==========================================================================
+   FAQ · sticky intro + quiet accordion card
+   ========================================================================== */
+
+.faq {
+  background: var(--page);
+}
+
+.faq__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(32px, 5vw, 78px);
+  align-items: start;
+}
+
+.faq__intro {
+  position: sticky;
+  top: calc(var(--header-h) + 32px);
+}
+
+.faq__link {
+  margin-top: 22px;
+}
+
+.faq__list {
+  padding: 4px clamp(18px, 2.4vw, 26px);
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: var(--card);
+}
+
+.faq-item + .faq-item {
+  border-top: 1px solid var(--line);
+}
+
+.faq-item__heading {
+  margin: 0;
+  font: inherit;
+  letter-spacing: normal;
+  line-height: inherit;
+}
+
+.faq-item__trigger {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  width: 100%;
+  padding: 20px 0;
+  text-align: left;
+  font-family: var(--font-display);
+  font-size: clamp(0.98rem, 1.35vw, 1.06rem);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.4;
+}
+
+.faq-item__trigger:hover {
+  color: var(--accent-ink);
+}
+
+.faq-item__icon {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: none;
+  place-items: center;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  color: var(--ink);
+  transition:
+    background-color 0.3s var(--ease),
+    border-color 0.3s var(--ease),
+    color 0.3s var(--ease);
+}
+
+.faq-item.is-open .faq-item__icon {
+  border-color: var(--ink);
+  background: var(--ink);
+  color: var(--page);
+}
+
+.faq-item__answer {
+  padding: 0 48px 22px 0;
+  animation: faq-in 0.3s var(--ease) both;
+}
+
+@keyframes faq-in {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.faq-item__answer p {
+  color: var(--body);
+  font-size: 0.9rem;
+  line-height: 1.65;
+}
+
+@media (max-width: 920px) {
+  .faq__layout {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .faq__intro {
+    position: static;
+  }
+
+  .faq__link {
+    margin-top: 16px;
+  }
+}
+
+@media (max-width: 520px) {
+  .faq__list {
+    border-radius: 18px;
+    padding-inline: 16px;
+  }
+
+  .faq-item__trigger {
+    gap: 12px;
+    padding: 17px 0;
+  }
+
+  .faq-item__answer {
+    padding-right: 0;
+  }
+}
