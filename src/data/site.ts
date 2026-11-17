@@ -73,6 +73,13 @@ export interface OwnerDetails {
   social: { label: string; url: string }[];
 }
 
+export interface Highlight {
+  title: string;
+  summary: string;
+  badge: string;
+  details: string[];
+}
+
 export const site = {
   hero: {
     // Keep the headline short enough to sit on one line on desktop.
@@ -82,6 +89,30 @@ export const site = {
     primaryCta: { label: 'Start a project', href: '#contact' },
     secondaryCta: { label: 'Explore services', href: '#services' },
   },
+
+  highlights: [
+    {
+      badge: 'Discovery',
+      title: 'Product thinking before production.',
+      summary:
+        'We turn fuzzy goals into a clear roadmap, so teams know what is being built, why it matters, and what success looks like.',
+      details: ['Workflow mapping', 'Opportunity framing', 'Decision-ready scope'],
+    },
+    {
+      badge: 'Delivery',
+      title: 'Design and build as one system.',
+      summary:
+        'Strategy, UX, and engineering move together so the final product feels coherent from the first click to launch day.',
+      details: ['Prototype-driven iteration', 'Accessible interfaces', 'Launch support'],
+    },
+    {
+      badge: 'Scale',
+      title: 'The product keeps improving after launch.',
+      summary:
+        'We build for extension, analytics, and real operational use so the next round of changes is easier and less risky.',
+      details: ['Integrations', 'Metrics & reporting', 'Design system continuity'],
+    },
+  ] as Highlight[],
 
   /**
    * FORM INTEGRATION

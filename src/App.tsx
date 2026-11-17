@@ -3,6 +3,7 @@ import type { ServiceId } from './data/site';
 import { Header } from './components/Header';
 import { Hero, Ticker } from './components/Hero';
 import { Services } from './components/Services';
+import { Highlights } from './components/Highlights';
 import { Solutions } from './components/Solutions';
 import { Work } from './components/Work';
 import { Reviews } from './components/Reviews';
@@ -52,6 +53,7 @@ export default function App() {
         <Hero />
         <Ticker />
         <Services onDiscuss={handleDiscuss} />
+        <Highlights />
         <Solutions onDiscuss={handleDiscuss} />
         <Work />
         <Reviews />
