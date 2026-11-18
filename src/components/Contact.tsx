@@ -114,6 +114,92 @@ function buildSummary(values: FormValues): string {
   ].join('\n');
 }
 
+/**
+ * Submit to a Brevo hosted form.
+ *
+ * Brevo's public form action is a normal HTML form post, not a JSON API. We
+ * build a hidden native form and target a hidden iframe so the visitor stays on
+ * this page, and no API key has to sit in the bundle. The iframe load is the
+ * only success signal a cross-origin post gives us; a timeout is surfaced as a
+ * real failure instead of a fake success.
+ */
+function submitToBrevo(values: FormValues): Promise<void> {
+  return new Promise((resolve, reject) => {
+    const interests = serviceOptions
+      .filter((option) => values.services.includes(option.value))
+      .map((option) => option.label)
+      .join(', ');
+
+    const fields: Record<string, string> = {
+      [site.brevo.fields.email]: values.email.trim(),
+      [site.brevo.fields.name]: values.name.trim(),
+      [site.brevo.fields.company]: values.company.trim(),
+      [site.brevo.fields.interests]: interests,
+      [site.brevo.fields.stage]: values.stage,
+      [site.brevo.fields.message]: values.message.trim(),
+    };
+
+    // Brevo includes these in a normal form; sending them keeps its filters happy.
+    fields.email_address_check = '';
+    fields.locale = 'en';
+
+    const target = `brevo-target-${Date.now()}`;
+    const iframe = document.createElement('iframe');
+    iframe.name = target;
+    iframe.title = 'Brevo form submission';
+    iframe.style.display = 'none';
+    document.body.appendChild(iframe);
+
+    const form = document.createElement('form');
+    form.action = site.brevo.formAction;
+    form.method = 'POST';
+    form.target = target;
+    form.style.display = 'none';
+
+    Object.entries(fields).forEach(([name, value]) => {
+      if (!name || !value) return;
+      const input = document.createElement('input');
+      input.type = 'hidden';
+      input.name = name;
+      input.value = value;
+      form.appendChild(input);
+    });
+
+    document.body.appendChild(form);
+
+    let settled = false;
+    const cleanup = () => {
+      form.remove();
+      iframe.remove();
+    };
+    const finish = (callback: () => void) => {
+      if (settled) return;
+      settled = true;
+      window.clearTimeout(timeout);
+      cleanup();
+      callback();
+    };
+
+    const timeout = window.setTimeout(
+      () => finish(() => reject(new Error('Brevo did not respond in time.'))),
+      15000,
+    );
+
+    // Ignore the iframe's initial about:blank load, then treat the next load as
+    // the form response.
+    let started = false;
+    const start = () => {
+      if (started) return;
+      started = true;
+      iframe.onload = () => finish(resolve);
+      form.submit();
+    };
+
+    iframe.onload = start;
+    window.setTimeout(start, 150);
+  });
+}
+
 export function Contact({ preselect }: ContactProps) {
   const ref = useReveal<HTMLElement>();
   const resultRef = useRef<HTMLDivElement>(null);
@@ -207,7 +293,7 @@ export function Contact({ preselect }: ContactProps) {
     const composed = buildSummary(values);
     setSummary(composed);
 
-    if (!site.formEndpoint) {
+    if (!site.brevo.formAction && !site.formEndpoint) {
       // Demo build: stop before any network call and show the inquiry instead.
       // This is the honest default, not an error state.
       setStatus('demo');
@@ -216,37 +302,44 @@ export function Contact({ preselect }: ContactProps) {
 
     setStatus('submitting');
 
-    // A stalled form is worse than a visible failure. Abort so the button never
-    // spins forever, and let the catch block offer a retry.
-    const controller = new AbortController();
-    const timeout = window.setTimeout(() => controller.abort(), 15000);
-
     try {
-      const response = await fetch(site.formEndpoint, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          Accept: 'application/json',
-        },
-        body: JSON.stringify({
-          name: values.name.trim(),
-          company: values.company.trim(),
-          email: values.email.trim(),
-          interests: values.services,
-          stage: values.stage,
-          message: values.message.trim(),
-          submittedAt: new Date().toISOString(),
-          source: 'techx-website',
-        }),
-        signal: controller.signal,
-      });
+      if (site.brevo.formAction) {
+        await submitToBrevo(values);
+      } else {
+        // A stalled form is worse than a visible failure. Abort so the button
+        // never spins forever, and let the catch block offer a retry.
+        const controller = new AbortController();
+        const timeout = window.setTimeout(() => controller.abort(), 15000);
 
-      if (!response.ok) throw new Error('The form endpoint rejected the request.');
+        try {
+          const response = await fetch(site.formEndpoint, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              Accept: 'application/json',
+            },
+            body: JSON.stringify({
+              name: values.name.trim(),
+              company: values.company.trim(),
+              email: values.email.trim(),
+              interests: values.services,
+              stage: values.stage,
+              message: values.message.trim(),
+              submittedAt: new Date().toISOString(),
+              source: 'techx-website',
+            }),
+            signal: controller.signal,
+          });
+
+          if (!response.ok) throw new Error('The form endpoint rejected the request.');
+        } finally {
+          window.clearTimeout(timeout);
+        }
+      }
+
       setStatus('success');
     } catch {
       setStatus('error');
-    } finally {
-      window.clearTimeout(timeout);
     }
   };
 
@@ -265,7 +358,7 @@ export function Contact({ preselect }: ContactProps) {
   };
 
   const resultVisible = status === 'success' || status === 'demo';
-  const endpointMissing = !site.formEndpoint;
+  const endpointMissing = !site.brevo.formAction && !site.formEndpoint;
 
   return (
     <section className="section contact" id="contact" ref={ref} aria-labelledby="contact-title">
@@ -308,7 +401,7 @@ export function Contact({ preselect }: ContactProps) {
                       {site.owner.email}
                     </a>
                   ) : (
-                    <span className="placeholder">[studio email, add before launch]</span>
+                    <span>Use the inquiry form and we will reply by email.</span>
                   )}
                 </dd>
               </div>
@@ -318,7 +411,7 @@ export function Contact({ preselect }: ContactProps) {
                   {site.owner.location ? (
                     site.owner.location
                   ) : (
-                    <span className="placeholder">[studio location or working model]</span>
+                    <span>Working remotely</span>
                   )}
                 </dd>
               </div>
@@ -337,14 +430,14 @@ export function Contact({ preselect }: ContactProps) {
                       ))}
                     </span>
                   ) : (
-                    <span className="placeholder">[social links, add before launch]</span>
+                    <span>No social profiles listed.</span>
                   )}
                 </dd>
               </div>
             </dl>
             <p className="contact__details-note">
-              These placeholders are intentionally visible until the studio supplies real contact
-              details. No address or profile is invented.
+              Prefer email? Write directly to Amos and you will get a reply from the person doing
+              the work.
             </p>
           </div>
         </div>
@@ -425,8 +518,8 @@ export function Contact({ preselect }: ContactProps) {
                 <p className="contact-form__demo-note">
                   <CircleAlert size={16} strokeWidth={2} aria-hidden="true" />
                   <span>
-                    Demo build: the form endpoint is not connected. Submissions are validated but
-                    not sent.
+                    Demo build: no email endpoint is connected. Submissions are validated but not
+                    sent.
                   </span>
                 </p>
               )}
@@ -589,8 +682,11 @@ export function Contact({ preselect }: ContactProps) {
 
               {status === 'error' && (
                 <p className="contact-form__error" role="alert">
-                  That did not send. Please try again, or come back once the studio has published
-                  direct contact details.
+                  That did not send. Please try again, or email{' '}
+                  <a className="contact__detail-link" href={`mailto:${site.owner.email}`}>
+                    {site.owner.email}
+                  </a>{' '}
+                  directly.
                 </p>
               )}
 

@@ -47,15 +47,21 @@
     />
 
     <!--
-      Structured data for search engines. It describes only what is publicly
-      known: a name, a description and three services. No address, URL, rating,
-      price or founding date is invented. Add real values only when they exist.
+      Structured data for search engines. It describes only public contact
+      details and the three services. No street address, rating or price is
+      claimed.
     -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@type": "Organization",
         "name": "TechX",
+        "email": "nganbewuborijaamos@gmail.com",
+        "sameAs": ["https://github.com/i-amfamous"],
+        "address": {
+          "@type": "PostalAddress",
+          "addressCountry": "GH"
+        },
         "description": "Technology and creative studio for companies, offering web application development, iOS and Android app development, and graphic design including brand identity.",
         "hasOfferCatalog": {
           "@type": "OfferCatalog",

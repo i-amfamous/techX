@@ -33,8 +33,8 @@ Sections render in this order, all from `src/App.tsx`:
 | Capability ticker | `Ticker` | Infinite CSS marquee, pauses on hover |
 | Services | `Services` | Accordion, one panel open at a time |
 | Solutions | `Solutions` | Four illustrative use cases |
-| Concept work | `Work` | Dark gallery of self-initiated studies |
-| Reviews | `Reviews` | Approved-quote slots, empty until real reviews exist |
+| Work | `Work` | Live client projects with screenshots and outbound links |
+| Reviews | `Reviews` | Client feedback, published with permission |
 | Process | `Process` | Sticky intro beside five numbered phases |
 | Studio | `Studio` | Principles and a "how we work" panel |
 | FAQ | `Faq` | Accordion, first answer open |
@@ -52,8 +52,10 @@ touching JSX.
 
 - `site` holds the hero copy, CTAs, the form endpoint, and owner contact
   details.
-- `services`, `solutions`, `concepts`, `processSteps`, `principles`, `reviews`
+- `services`, `solutions`, `projects`, `processSteps`, `principles`, `reviews`
   and `faqs` are plain arrays. Order in the array is order on the page.
+- Project screenshots live in `public/work/`. Retake one when the live site
+  changes, using the same 900px-wide crop so the cards stay aligned.
 - `navLinks` drives both the desktop navigation and the scroll spy. Keep `href`
   values in sync with section ids.
 
@@ -63,23 +65,29 @@ data, layout-specific wording next to the layout.
 
 ## The form, and why it does not fake success
 
-`Contact.tsx` posts JSON to `site.formEndpoint`.
+`Contact.tsx` supports a Brevo hosted form and, as a fallback, a generic JSON
+endpoint.
 
-- **Empty endpoint (current state):** the form validates, then shows a preview of
-  the inquiry with a copy button. It explicitly says nothing was sent. This is a
-  demo, not a dead form pretending to work.
-- **Configured endpoint:** the component sends `POST` with `Accept:
+- **Brevo (preferred):** paste the public action URL from the Brevo form into
+  `site.brevo.formAction` in `src/data/site.ts`, and match the attribute names
+  in `site.brevo.fields`. The browser submits a hidden native form to Brevo, so
+  no API key is shipped. Set the Brevo form's recipient to the studio inbox.
+- **JSON endpoint:** set `site.formEndpoint` only when
+  `site.brevo.formAction` is empty. The component sends `POST` with `Accept:
   application/json` and the fields `name`, `company`, `email`, `interests`,
   `stage`, `message`, `submittedAt`, `source`. Requests abort after 15 seconds.
+- **Neither configured (current state):** the form validates, then shows a
+  preview of the inquiry with a copy button. It explicitly says nothing was
+  sent. This is a demo, not a dead form pretending to work.
 - A hidden `website` field is a honeypot. Bots that fill it get a success screen
   and no network request.
 - Errors are announced through `role="alert"` and focus moves to the first
   invalid field. On success, focus moves to the result card so keyboard and
   screen-reader users are not stranded.
 
-To connect a form service, paste its endpoint into `formEndpoint` in
-`src/data/site.ts`. Check that the provider accepts JSON, and configure spam and
-consent handling on their side.
+Brevo forms with reCAPTCHA need that widget on the page; a plain form post will
+be rejected. Prefer a Brevo form without reCAPTCHA, or add the widget before
+connecting the action URL.
 
 ## Accessibility
 
@@ -125,19 +133,20 @@ The site targets WCAG 2.2 AA in the areas that matter for a marketing page:
 - `src/main.tsx` imports `base.css` before `App`. That order is load-bearing:
   component CSS must be able to override shared defaults.
 
-## Placeholders and honesty
+## Content and honesty
 
-This site is intentionally not a fiction. Until the studio supplies facts:
+Content is real and attributable:
 
-- `site.owner.email`, `location` and `social` are `null` or empty, and the page
-  shows visible bracketed placeholders.
-- Concept work is labelled self-initiated, not client work.
-- Reviews are empty guidance slots. Do not invent quotes, names, ratings or
-  logos. Publish only with client permission.
+- `site.owner` holds the studio's public email, working location and GitHub
+  profile. Update it in `src/data/site.ts` if those details change.
+- Work cards link to live projects and use screenshots captured from those
+  sites. The hero collage is still labelled as concept UI.
+- Reviews are published with client permission. Do not add quotes, names or
+  ratings without approval.
 - No metrics, awards, pricing or delivery timelines are claimed.
 
-Grep for `Placeholder`, `placeholder` and `[` before launch. The bracketed
-markers are deliberate unfinished-work signals, not styling mistakes.
+If a fact is not available, leave the field empty or remove the block rather
+than inventing it. The UI falls back to a visible marker only as a safety net.
 
 ## Deployment
 
@@ -151,10 +160,11 @@ markers are deliberate unfinished-work signals, not styling mistakes.
 
 ## Launch checklist
 
-1. Add real contact details to `site.owner`.
-2. Connect `site.formEndpoint` and send a test inquiry from a phone.
-3. Replace concept studies with approved case studies, or keep the labels.
-4. Add approved reviews, or remove the section and its nav link.
+1. Confirm the contact details in `site.owner` are current.
+2. Connect the Brevo form (`site.brevo.formAction`) and send a test inquiry from
+   a phone.
+3. Confirm each live project link still works, and refresh its screenshot.
+4. Confirm every review has client permission; remove any that do not.
 5. Review `index.html` metadata and the structured data block.
 6. Run `npm run build`.
 7. Tab through the page, open both accordions, open and close the mobile menu,

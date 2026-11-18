@@ -1,14 +1,4 @@
-/* ==========================================================================
-   TechX · base styles
-   Solid-colour design system. Inter throughout. No gradients, no italics.
-   ========================================================================== */
-
 :root {
-  /*
-    Solid palette. Two orange tokens on purpose: `--accent` is the fill colour
-    for buttons and marks, `--accent-ink` is the darker text-safe version used
-    on light surfaces. Swapping one for the other usually breaks contrast.
-  */
   --page: #fbfbf8;
   --page-2: #f4f4ef;
   --card: #ffffff;

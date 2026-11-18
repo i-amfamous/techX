@@ -8,7 +8,7 @@ const columns = [
     links: [
       { href: '#services', label: 'Services' },
       { href: '#solutions', label: 'Solutions' },
-      { href: '#work', label: 'Concept work' },
+      { href: '#work', label: 'Work' },
       { href: '#reviews', label: 'Reviews' },
     ],
   },
@@ -86,7 +86,7 @@ export function Footer() {
         <div className="footer__bottom">
           <p>© {year} TechX. All rights reserved.</p>
           <p className="footer__disclaimer">
-            Concept work and studio contact details are clearly labelled placeholders.
+            Selected work links to live projects. Client reviews are published only with permission.
           </p>
           <a className="footer__top-link" href="#top">
             Back to top

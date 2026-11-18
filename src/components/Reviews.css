@@ -1,24 +1,9 @@
 /* ==========================================================================
-   Reviews · approved-quote slots
+   Reviews · client feedback
    ========================================================================== */
 
 .reviews {
   background: var(--page-2);
-}
-
-.reviews__note {
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  margin-top: 18px;
-  color: var(--muted);
-  font-size: 0.82rem;
-  line-height: 1.4;
-}
-
-.reviews__note svg {
-  flex: none;
-  color: var(--accent-ink);
 }
 
 .reviews__grid {
@@ -119,23 +104,10 @@
   .reviews__grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
   }
-
-  .review:last-child {
-    grid-column: 1 / -1;
-  }
 }
 
 @media (max-width: 680px) {
   .reviews__grid {
     grid-template-columns: 1fr;
-  }
-
-  .review:last-child {
-    grid-column: auto;
-  }
-
-  .reviews__note {
-    align-items: flex-start;
-    text-align: left;
   }
 }

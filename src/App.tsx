@@ -45,8 +45,8 @@ export default function App() {
       <Header />
 
       {/*
-        Section order is the story: what we do, what that looks like, proof
-        (or honest placeholders for it), how we work, then the ask.
+        Section order is the story: what we do, what that looks like, proof,
+        how we work, then the ask.
         Dark bands at Work, Studio and the footer break up the light page.
       */}
       <main id="main">

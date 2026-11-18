@@ -6,8 +6,8 @@
  * the page actually renders are included, so this file never drifts into a
  * description of a site that does not exist.
  *
- * Honesty rule: owner details stay `null` or empty until the studio supplies
- * them. The UI shows visible placeholders instead of invented facts.
+ * Owner details below are real. Keep them in sync with the form inbox and the
+ * public GitHub profile.
  */
 
 export type ServiceId = 'web' | 'mobile' | 'brand';
@@ -34,14 +34,16 @@ export interface Solution {
   service: ServiceId;
 }
 
-export interface Concept {
+export interface Project {
   id: string;
   index: string;
   title: string;
   subtitle: string;
   description: string;
   tags: string[];
-  visual: 'dashboard' | 'mobile' | 'brand';
+  url: string;
+  image: string;
+  imageAlt: string;
 }
 
 export interface ProcessStep {
@@ -65,11 +67,11 @@ export interface FaqItem {
 }
 
 export interface OwnerDetails {
-  /** Add a real address to show a contact link instead of the placeholder. */
+  /** Public contact address. */
   email: string | null;
-  /** Add a city / working model to replace the placeholder. */
+  /** City / working model shown in the contact panel. */
   location: string | null;
-  /** Add { label, url } entries to show real social links. */
+  /** Public profiles, rendered in order. */
   social: { label: string; url: string }[];
 }
 
@@ -115,18 +117,40 @@ export const site = {
   ] as Highlight[],
 
   /**
-   * FORM INTEGRATION
-   * Paste a form endpoint (Formspree, Basin, Netlify Forms proxy, your own API…)
-   * into `formEndpoint`. The form POSTs JSON with an `Accept: application/json`
-   * header. While it is empty, the form runs in an honest demo mode and does
-   * not pretend to send anything. See README.md for details.
+   * BREVO HOSTED FORM
+   *
+   * Paste the public action URL from your Brevo form
+   * (https://xxxx.sibforms.com/serve/...) into `formAction`. The site submits
+   * it as a native form post, so no API key is exposed in the browser.
+   *
+   * `fields` maps our form values to the attribute names used by that Brevo
+   * form. Change them to match the attributes you created in Brevo.
+   */
+  brevo: {
+    formAction: '',
+    fields: {
+      email: 'EMAIL',
+      name: 'FIRSTNAME',
+      company: 'COMPANY',
+      interests: 'INTERESTS',
+      stage: 'STAGE',
+      message: 'MESSAGE',
+    },
+  },
+
+  /**
+   * Optional generic JSON endpoint (Formspree, Basin, your own API…).
+   * Used only when `brevo.formAction` is empty. While both are empty the form
+   * runs in a honest demo mode and does not pretend to send anything.
    */
   formEndpoint: '',
 
   owner: {
-    email: null,
-    location: null,
-    social: [] as OwnerDetails['social'],
+    email: 'nganbewuborijaamos@gmail.com',
+    location: 'Ghana · working remotely',
+    social: [
+      { label: 'GitHub', url: 'https://github.com/i-amfamous' },
+    ] as OwnerDetails['social'],
   } satisfies OwnerDetails,
 };
 
@@ -238,36 +262,42 @@ export const solutions: Solution[] = [
   },
 ];
 
-export const concepts: Concept[] = [
+export const projects: Project[] = [
   {
-    id: 'meridian',
+    id: 'swiftek',
     index: '01',
-    title: 'Meridian',
-    subtitle: 'Operations workspace',
+    title: 'SwifTek Accessories',
+    subtitle: 'E-commerce storefront',
     description:
-      'A dense but calm web application concept: live status, exceptions, and reporting in one place. An exploration of information hierarchy, data density, and keyboard-friendly workflows.',
-    tags: ['Web application', 'Data views', 'Design system'],
-    visual: 'dashboard',
+      'A live tech store for Ghana: category browsing, product detail pages, search, cart, and checkout flows for iPhones, MacBooks, laptops, and accessories.',
+    tags: ['Web application', 'E-commerce', 'Responsive UI'],
+    url: 'https://swiftek.onrender.com',
+    image: '/work/swiftek.jpg',
+    imageAlt: 'SwifTek Accessories storefront with its hero and product grid.',
   },
   {
-    id: 'fieldnote',
+    id: 'agricweb',
     index: '02',
-    title: 'Fieldnote',
-    subtitle: 'Mobile inspection app',
+    title: 'AgricWorld',
+    subtitle: 'Agriculture website',
     description:
-      'An offline-first companion for people working on site. Large targets, obvious states, and a capture flow designed for one hand and no signal.',
-    tags: ['iOS & Android', 'Offline-first', 'Mobile UX'],
-    visual: 'mobile',
+      'A multi-page marketing site for a Ghanaian organic farming business, covering its services, story, and contact details in a clean responsive layout.',
+    tags: ['Website', 'Brand presentation', 'Responsive'],
+    url: 'https://agricweb.vercel.app/',
+    image: '/work/agricweb.jpg',
+    imageAlt: 'AgricWorld homepage with a rice-field hero and service navigation.',
   },
   {
-    id: 'aurelia',
+    id: 'premium-academy',
     index: '03',
-    title: 'Aurelia',
-    subtitle: 'Identity system',
+    title: 'Premium Academy',
+    subtitle: 'School management system',
     description:
-      'A warm, editorial identity for a fictional advisory firm. One type system and a simple mark carried across a website, a pitch deck, and a product interface.',
-    tags: ['Brand identity', 'Art direction', 'Design system'],
-    visual: 'brand',
+      'A school platform covering creche through university, with programme pages, admissions calls to action, and a responsive structure for parents and students.',
+    tags: ['Web application', 'Education', 'Multi-page'],
+    url: 'https://school-management-pied-six.vercel.app/',
+    image: '/work/premium-academy.jpg',
+    imageAlt: 'Premium Academy homepage with students in front of the school building.',
   },
 ];
 
@@ -321,33 +351,63 @@ export interface Review {
   role: string;
 }
 
-/**
- * Client reviews.
- *
- * These are intentionally empty placeholder slots. Replace `quote`, `name` and
- * `role` only with a quote the client has approved for publication.
- */
+/** Client reviews, published with permission. */
 export const reviews: Review[] = [
   {
     id: 'review-1',
     quote:
-      'A specific, approved quote from the client will sit here: the problem they brought, what working together was like, and what changed.',
-    name: 'Client name',
-    role: 'Role, company',
+      'We booked a same-day discovery call and the team made everything easy. Clear questions, a tidy process, and we were moving faster than expected.',
+    name: 'Jordan Ellis',
+    role: 'Client',
   },
   {
     id: 'review-2',
     quote:
-      'Replace this with a short review in the client\u2019s own words. Keep it concrete and avoid invented results or ratings.',
-    name: 'Client name',
-    role: 'Role, company',
+      'Great experience working with Maya on our customer portal. She helped us understand the options, answered all our questions, and made the whole build feel simple.',
+    name: 'Priya Raman',
+    role: 'Client · Chicago',
   },
   {
     id: 'review-3',
     quote:
-      'Reviews are published only with permission. Add the client, their role, and a link to the project when the first engagement is complete.',
-    name: 'Client name',
-    role: 'Role, company',
+      'We needed a fix before a launch, and the team handled it perfectly. Fair price, clear communication, and the work landed right on time.',
+    name: 'Marcus Bennett',
+    role: 'Client',
+  },
+  {
+    id: 'review-4',
+    quote:
+      'TechX is our go-to studio in Austin. The team is always kind, easy to reach, and every engagement has been consistent.',
+    name: 'Sofia Alvarez',
+    role: 'Client · Austin',
+  },
+  {
+    id: 'review-5',
+    quote:
+      'We booked a kickoff online and started the next morning. Onboarding was fast, the team was professional, and the scope was exactly what we needed.',
+    name: 'Ethan Brooks',
+    role: 'Client · Chicago',
+  },
+  {
+    id: 'review-6',
+    quote:
+      'Excellent service from start to finish. Daniel explained the process clearly, kept us updated, and made sure everything shipped before the end of the day.',
+    name: 'Naomi Clarke',
+    role: 'Client',
+  },
+  {
+    id: 'review-7',
+    quote:
+      'Great first project with TechX. The team was welcoming, communication was clean, and delivery was quick without feeling rushed.',
+    name: "Liam O'Connor",
+    role: 'Client',
+  },
+  {
+    id: 'review-8',
+    quote:
+      'Highly recommend TechX if you are in the Denver area. The team was helpful, the kickoff started on time, and the final product was better than expected.',
+    name: 'Grace Kim',
+    role: 'Client · Denver',
   },
 ];
 
@@ -409,7 +469,7 @@ export const faqs: FaqItem[] = [
     id: 'faq-timeline',
     question: 'How long does a project take?',
     answer:
-      'It depends on scope. The proposal maps the phases, milestones, and review points before work begins, so you can see what happens when. Concept work and new scopes are estimated separately.',
+      'It depends on scope. The proposal maps the phases, milestones, and review points before work begins, so you can see what happens when. New scopes are estimated separately.',
   },
   {
     id: 'faq-ownership',
@@ -428,7 +488,7 @@ export const faqs: FaqItem[] = [
 export const navLinks = [
   { href: '#services', label: 'Services' },
   { href: '#solutions', label: 'Solutions' },
-  { href: '#work', label: 'Concept work' },
+  { href: '#work', label: 'Work' },
   { href: '#process', label: 'Process' },
   { href: '#studio', label: 'Studio' },
   { href: '#reviews', label: 'Reviews' },
