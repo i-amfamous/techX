@@ -116,6 +116,9 @@ The site targets WCAG 2.2 AA in the areas that matter for a marketing page:
   fades. Motion is decoration; the content is always readable without it.
 - **Icons:** `lucide-react`. The TechX X mark is inline SVG in `Wordmark.tsx` so
   it inherits `currentColor`.
+- **Favicon:** the orange X on the ink tile, in `public/` as an SVG, a 32px PNG,
+  a 180px Apple touch icon, and a multi-size `.ico` for clients that still ask
+  for `/favicon.ico`.
 
 ### Conventions worth knowing
 
