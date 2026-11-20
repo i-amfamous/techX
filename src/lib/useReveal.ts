@@ -39,7 +39,7 @@ export function useReveal<T extends HTMLElement>() {
       },
       // Trigger a touch before the section edge arrives, so the content is
       // already settling by the time it reaches the reading position.
-      { threshold: 0.08, rootMargin: '0px 0px -6% 0px' },
+      { threshold: 0.12, rootMargin: '0px 0px -10% 0px' },
     );
 
     observer.observe(node);

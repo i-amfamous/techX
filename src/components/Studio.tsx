@@ -21,7 +21,7 @@ export function Studio() {
   const ref = useReveal<HTMLElement>();
 
   return (
-    <section className="section studio on-ink" id="studio" ref={ref} aria-labelledby="studio-title">
+    <section className="section studio" id="studio" ref={ref} aria-labelledby="studio-title">
       <div className="container">
         <div className="studio__top">
           <h2 className="section-title reveal" id="studio-title" style={revealDelay(0)}>

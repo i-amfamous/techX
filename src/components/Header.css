@@ -7,19 +7,21 @@
   top: 0;
   z-index: 100;
   border-bottom: 1px solid transparent;
-  background: rgba(251, 251, 248, 0.82);
+  background: rgba(255, 255, 255, 0.78);
   -webkit-backdrop-filter: blur(16px);
   backdrop-filter: blur(16px);
   color: var(--ink);
   transition:
     background-color 0.3s var(--ease),
-    border-color 0.3s var(--ease);
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
 }
 
 .site-header.is-scrolled,
 .site-header.is-menu-open {
   border-bottom-color: var(--line);
-  background: rgba(251, 251, 248, 0.96);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 8px 24px -20px rgba(15, 23, 42, 0.18);
 }
 
 .site-header__inner {
@@ -104,7 +106,7 @@
 .menu-toggle:hover {
   border-color: var(--ink);
   background: var(--ink);
-  color: #fbfbf8;
+  color: #ffffff;
 }
 
 /* Full-screen mobile navigation */

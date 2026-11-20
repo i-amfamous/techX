@@ -1,33 +1,33 @@
 :root {
-  --page: #fbfbf8;
-  --page-2: #f4f4ef;
+  --page: #ffffff;
+  --page-2: #f6f7f9;
   --card: #ffffff;
-  --cream: #f0eee4;
-  --sage: #e3ead9;
-  --ink: #0c0f0d;
-  --ink-2: #151a16;
-  --ink-3: #202622;
-  --body: #575e58;
-  --muted: #7b827c;
-  --line: #e4e5dd;
-  --line-strong: #cdd0c5;
-  --line-dark: rgba(251, 251, 248, 0.14);
-  --line-dark-soft: rgba(251, 251, 248, 0.07);
-  --accent: #ff4a17;
-  --accent-ink: #c03a0d;
-  --accent-wash: #ffece4;
-  --focus: #0c0f0d;
+  --cream: #f3f4f6;
+  --sage: #eef2ff;
+  --ink: #0f172a;
+  --ink-2: #111827;
+  --ink-3: #1f2937;
+  --body: #475569;
+  --muted: #64748b;
+  --line: #e5e7eb;
+  --line-strong: #d1d5db;
+  --line-dark: rgba(255, 255, 255, 0.14);
+  --line-dark-soft: rgba(255, 255, 255, 0.08);
+  --accent: #2563eb;
+  --accent-ink: #1d4ed8;
+  --accent-wash: #eff6ff;
+  --focus: #2563eb;
 
-  /* Type · Inter, as the reference */
+  /* Type */
   --font-sans: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
   --font-display: var(--font-sans);
 
   /* Layout */
-  --max: 1240px;
+  --max: 1200px;
   --gutter: clamp(20px, 4.4vw, 48px);
-  --radius: 24px;
-  --radius-md: 18px;
-  --radius-sm: 12px;
+  --radius: 20px;
+  --radius-md: 14px;
+  --radius-sm: 10px;
   --header-h: 72px;
 
   /* Motion */
@@ -299,7 +299,7 @@ i {
 }
 
 .btn:active {
-  transform: translateY(1px) scale(0.99);
+  transform: translateY(1px) scale(0.985);
 }
 
 .btn--ink {
@@ -398,16 +398,20 @@ i {
 
 .reveal {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(30px) scale(0.982);
+  filter: blur(8px);
   transition:
-    opacity 0.7s var(--ease),
-    transform 0.7s var(--ease);
+    opacity 0.9s var(--ease),
+    transform 0.9s var(--ease),
+    filter 0.9s var(--ease);
   transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform, filter;
 }
 
 .is-revealed .reveal {
   opacity: 1;
   transform: none;
+  filter: blur(0);
 }
 
 /* --------------------------------------------------------------------------
@@ -512,6 +516,7 @@ i {
   .reveal {
     opacity: 1;
     transform: none;
+    filter: none;
   }
 }
 

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Check, Globe, Minus, Palette, Plus, Smartphone } from 'lucide-react';
+import { ArrowUpRight, Check, ChevronDown, Globe, Palette, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import { services, type ServiceId } from '../data/site';
 import { revealDelay, useReveal } from '../lib/useReveal';
@@ -67,7 +67,7 @@ export function Services({ onDiscuss }: ServicesProps) {
                       <span className="service__tagline">{service.tagline}</span>
                     </span>
                     <span className="service__toggle" aria-hidden="true">
-                      {open ? <Minus size={18} strokeWidth={2} /> : <Plus size={18} strokeWidth={2} />}
+                      <ChevronDown size={18} strokeWidth={2} />
                     </span>
                   </button>
                 </h3>

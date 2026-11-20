@@ -7,7 +7,7 @@ export function Highlights() {
   const ref = useReveal<HTMLElement>();
 
   return (
-    <section className="section highlights on-ink" id="highlights" ref={ref} aria-labelledby="highlights-title">
+    <section className="section highlights" id="highlights" ref={ref} aria-labelledby="highlights-title">
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="highlights-title" style={revealDelay(0)}>

@@ -1,4 +1,4 @@
-import { ArrowUpRight, Minus, Plus } from 'lucide-react';
+import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { faqs } from '../data/site';
 import { revealDelay, useReveal } from '../lib/useReveal';
@@ -53,7 +53,7 @@ export function Faq() {
                   >
                     <span>{item.question}</span>
                     <span className="faq-item__icon" aria-hidden="true">
-                      {open ? <Minus size={16} strokeWidth={2} /> : <Plus size={16} strokeWidth={2} />}
+                      <ChevronDown size={16} strokeWidth={2} />
                     </span>
                   </button>
                 </h3>

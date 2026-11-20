@@ -85,11 +85,21 @@ export interface Highlight {
 export const site = {
   hero: {
     // Keep the headline short enough to sit on one line on desktop.
+    badge: {
+      label: 'New',
+      text: 'Building web, mobile, and brand systems for growing teams',
+    },
     headline: 'Ideas, made useful',
     intro:
       'TechX is a technology and creative studio. We design and build web applications, mobile apps, and brand identities that turn a clear idea into something people can use.',
     primaryCta: { label: 'Start a project', href: '#contact' },
-    secondaryCta: { label: 'Explore services', href: '#services' },
+    secondaryCta: { label: 'See our work', href: '#work' },
+    ctaPlaceholder: 'you@company.com',
+    finePrint: 'Based in Ghana · Working remotely · Reply within 1 business day',
+    trust: [
+      'Web applications, iOS & Android apps, and brand identities',
+      'From discovery and design to build, launch, and support',
+    ],
   },
 
   highlights: [

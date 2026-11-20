@@ -52,12 +52,12 @@ export default function App() {
       <main id="main">
         <Hero />
         <Ticker />
-        <Services onDiscuss={handleDiscuss} />
         <Highlights />
+        <Services onDiscuss={handleDiscuss} />
         <Solutions onDiscuss={handleDiscuss} />
         <Work />
-        <Reviews />
         <Process />
+        <Reviews />
         <Studio />
         <Faq />
         <Contact preselect={preselect} />

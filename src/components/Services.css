@@ -106,7 +106,8 @@
   transition:
     background-color 0.3s var(--ease),
     border-color 0.3s var(--ease),
-    color 0.3s var(--ease);
+    color 0.3s var(--ease),
+    transform 0.35s var(--ease);
 }
 
 .service__trigger:hover .service__toggle {
@@ -116,18 +117,19 @@
 .service.is-open .service__toggle {
   border-color: var(--ink);
   background: var(--ink);
-  color: var(--page);
+  color: #fff;
+  transform: rotate(180deg);
 }
 
 .service__panel-inner {
   padding: 0 clamp(18px, 2.4vw, 28px) clamp(22px, 2.8vw, 32px);
-  animation: service-in 0.32s var(--ease) both;
+  animation: service-in 0.4s var(--ease) both;
 }
 
 @keyframes service-in {
   from {
     opacity: 0;
-    transform: translateY(-6px);
+    transform: translateY(-8px);
   }
   to {
     opacity: 1;

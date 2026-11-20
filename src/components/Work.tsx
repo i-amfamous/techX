@@ -14,7 +14,7 @@ export function Work() {
   const ref = useReveal<HTMLElement>();
 
   return (
-    <section className="section work on-ink" id="work" ref={ref} aria-labelledby="work-title">
+    <section className="section work" id="work" ref={ref} aria-labelledby="work-title">
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="work-title" style={revealDelay(0)}>

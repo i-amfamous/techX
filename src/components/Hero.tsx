@@ -1,17 +1,13 @@
+import { useEffect, useState, type CSSProperties, type FormEvent } from 'react';
 import {
-  ArrowDown,
+  ArrowRight,
   ArrowUpRight,
-  BatteryFull,
-  Camera,
-  Check,
-  Globe,
+  CheckCircle2,
+  CircleDashed,
   LayoutGrid,
-  MapPin,
   Palette,
-  Signal,
   Smartphone,
-  Wifi,
-  WifiOff,
+  Sparkles,
 } from 'lucide-react';
 import { site } from '../data/site';
 import { useReveal } from '../lib/useReveal';
@@ -21,210 +17,187 @@ import './Hero.css';
 /**
  * Hero and the capability ticker that follows it.
  *
- * The large dark panel is a concept collage, not a screenshot and not client
- * work: browser window, brand card and phone are built from DOM and inline SVG
- * so they stay sharp at any density, cost no image requests, and can be labelled
- * as concepts in the caption. The whole stage is `aria-hidden`; the real
- * message is the headline and lede above it.
+ * The hero is rebuilt around a split layout: product-style copy and CTA on the
+ * left, and a concept dashboard mockup on the right. The mockup is decorative
+ * UI built from markup (no screenshots) so it stays crisp, lightweight, and
+ * easy to adapt as the studio's message evolves.
  */
 
-const capabilities = [
-  { icon: Globe, label: 'Web applications' },
-  { icon: Smartphone, label: 'iOS & Android' },
-  { icon: Palette, label: 'Brand identity' },
-];
-
-
-const studioRows = [
-  {
-    icon: Globe,
-    title: 'Web applications',
-    meta: 'Portals · platforms · internal tools',
-  },
-  {
-    icon: Smartphone,
-    title: 'Mobile apps',
-    meta: 'Customer apps · field tools',
-  },
-  {
-    icon: Palette,
-    title: 'Brand identity',
-    meta: 'Positioning · systems · art direction',
-  },
-];
-
-function HeroStage() {
+function HeroVisual() {
   return (
-    <div className="hero-stage" aria-hidden="true">
-      <span className="hero-stage__watermark">
+    <div className="hero-visual" aria-hidden="true">
+      <div className="hero-visual__glow" />
+      <div className="hero-visual__card hero-visual__card--main">
+        <div className="hero-visual__top">
+          <div>
+            <p className="hero-visual__eyebrow">Project overview</p>
+            <h3 className="hero-visual__title">Northstar Portal</h3>
+            <p className="hero-visual__meta">Client workspace · Sprint 06</p>
+          </div>
+          <span className="hero-visual__status">
+            <span className="hero-visual__status-dot" />
+            On track
+          </span>
+        </div>
+
+        <div className="hero-visual__metric">
+          <span className="hero-visual__metric-label">Launch readiness</span>
+          <strong className="hero-visual__metric-value">72%</strong>
+          <span className="hero-visual__metric-note">Design approved · Build in progress</span>
+          <div className="hero-visual__progress" role="presentation">
+            <span style={{ width: '72%' }} />
+          </div>
+        </div>
+
+        <div className="hero-visual__actions" aria-hidden="true">
+          <span className="is-active">Discover</span>
+          <span className="is-active">Design</span>
+          <span className="is-active">Build</span>
+          <span>Launch</span>
+        </div>
+
+        <div className="hero-visual__feed">
+          <p className="hero-visual__feed-label">Today</p>
+          <ul>
+            <li>
+              <span className="hero-visual__feed-icon is-done">
+                <CheckCircle2 size={14} strokeWidth={2.2} />
+              </span>
+              <span className="hero-visual__feed-copy">
+                <strong>Customer portal flows approved</strong>
+                <small>Web application · 09:24</small>
+              </span>
+              <span className="hero-visual__feed-tag">Done</span>
+            </li>
+            <li>
+              <span className="hero-visual__feed-icon is-done">
+                <CheckCircle2 size={14} strokeWidth={2.2} />
+              </span>
+              <span className="hero-visual__feed-copy">
+                <strong>Brand system tokens handed off</strong>
+                <small>Identity · 11:10</small>
+              </span>
+              <span className="hero-visual__feed-tag">Done</span>
+            </li>
+            <li>
+              <span className="hero-visual__feed-icon">
+                <CircleDashed size={14} strokeWidth={2.2} />
+              </span>
+              <span className="hero-visual__feed-copy">
+                <strong>Mobile field checklist prototype</strong>
+                <small>iOS & Android · In review</small>
+              </span>
+              <span className="hero-visual__feed-tag is-muted">Next</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div className="hero-visual__card hero-visual__card--float hero-visual__card--scope">
+        <p className="hero-visual__mini-label">Scope snapshot</p>
+        <ul className="hero-visual__scope-list">
+          <li>
+            <LayoutGrid size={14} strokeWidth={1.8} />
+            Web platform
+          </li>
+          <li>
+            <Smartphone size={14} strokeWidth={1.8} />
+            Mobile companion
+          </li>
+          <li>
+            <Palette size={14} strokeWidth={1.8} />
+            Brand identity
+          </li>
+        </ul>
+      </div>
+
+      <div className="hero-visual__card hero-visual__card--float hero-visual__card--note">
+        <span className="hero-visual__note-icon">
+          <Sparkles size={14} strokeWidth={2} />
+        </span>
+        <div>
+          <p className="hero-visual__mini-label">Next milestone</p>
+          <strong>Usability review</strong>
+          <small>Thursday · stakeholder walkthrough</small>
+        </div>
+      </div>
+
+      <p className="hero-visual__caption">
         <XMark />
-      </span>
-      <span className="hero-stage__orb" />
-
-      <div className="hero-brand-card">
-        <div className="hero-brand-card__top">
-          <span>Aurelia</span>
-          <span>Identity / concept</span>
-        </div>
-        <div className="hero-brand-card__mark">
-          A<span>.</span>
-        </div>
-        <p className="hero-brand-card__line">Clarity, by design.</p>
-        <div className="hero-brand-card__swatches">
-          <i />
-          <i />
-          <i />
-          <i />
-        </div>
-      </div>
-
-      <div className="hero-window">
-        <div className="hero-window__bar">
-          <span className="hero-window__dots">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span className="hero-window__url">techx.studio / studio-index</span>
-          <span className="hero-window__tag">Concept preview</span>
-        </div>
-
-        <div className="hero-window__body">
-          <div className="hero-window__rail">
-            <span className="hero-window__logo">TX</span>
-            <LayoutGrid size={14} className="is-active" />
-            <Smartphone size={14} />
-            <Palette size={14} />
-            <span className="hero-window__rail-spacer" />
-            <span className="hero-window__avatar" />
-          </div>
-
-          <div className="hero-window__main">
-            <div className="hero-window__head">
-              <div>
-                <p className="hero-window__label">Studio index</p>
-                <p className="hero-window__title">Three disciplines. One team.</p>
-              </div>
-              <span className="hero-window__chip">TX / 01</span>
-            </div>
-
-            <div className="hero-window__list">
-              {studioRows.map((row) => {
-                const Icon = row.icon;
-                return (
-                  <div className="hero-window__row" key={row.title}>
-                    <span className="hero-window__row-icon">
-                      <Icon size={15} strokeWidth={1.8} />
-                    </span>
-                    <span className="hero-window__row-copy">
-                      <strong>{row.title}</strong>
-                      <small>{row.meta}</small>
-                    </span>
-                    <ArrowUpRight size={13} strokeWidth={1.8} />
-                  </div>
-                );
-              })}
-            </div>
-
-            <div className="hero-window__foot">
-              <div className="hero-window__phases">
-                {['Discover', 'Design', 'Build', 'Launch'].map((phase, index) => (
-                  <span key={phase} className={index === 2 ? 'is-current' : undefined}>
-                    {phase}
-                  </span>
-                ))}
-              </div>
-              <span className="hero-window__sample">Concept UI</span>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      <div className="hero-phone">
-        <span className="hero-phone__notch" />
-        <div className="hero-phone__status">
-          <span>9:41</span>
-          <span className="hero-phone__status-icons">
-            <Signal size={6} strokeWidth={2.4} />
-            <Wifi size={6} strokeWidth={2.4} />
-            <BatteryFull size={8} strokeWidth={2.2} />
-          </span>
-        </div>
-
-        <div className="hero-phone__head">
-          <span>Fieldnote</span>
-          <span className="hero-phone__avatar" />
-        </div>
-
-        <div className="hero-phone__offline">
-          <WifiOff size={8} strokeWidth={2.4} /> Offline · sync ready
-        </div>
-
-        <div className="hero-phone__map">
-          <svg viewBox="0 0 200 100" preserveAspectRatio="none" focusable="false">
-            {[20, 40, 60, 80].map((y) => (
-              <line key={y} x1="0" y1={y} x2="200" y2={y} stroke="rgba(12,15,13,0.09)" strokeWidth="1" />
-            ))}
-            {[40, 80, 120, 160].map((x) => (
-              <line key={x} x1={x} y1="0" x2={x} y2="100" stroke="rgba(12,15,13,0.09)" strokeWidth="1" />
-            ))}
-            <path
-              d="M18 82 C48 72 44 52 78 56 S118 72 142 40 S172 30 190 16"
-              fill="none"
-              stroke="#c03a0d"
-              strokeWidth="1.6"
-              strokeDasharray="4 3"
-            />
-            <circle cx="18" cy="82" r="3.5" fill="#ff4a17" />
-            <circle cx="142" cy="40" r="3" fill="#0c0f0d" />
-          </svg>
-          <span className="hero-phone__pin">
-            <MapPin size={10} strokeWidth={2.2} />
-          </span>
-          <span className="hero-phone__map-label">North site · 3 stops</span>
-        </div>
-
-        <div className="hero-phone__tasks">
-          <div className="hero-phone__task">
-            <span className="hero-phone__check">
-              <Check size={8} strokeWidth={3} />
-            </span>
-            <span>
-              <strong>Check intake valve</strong>
-              <small>Completed · 09:12</small>
-            </span>
-          </div>
-          <div className="hero-phone__task">
-            <span className="hero-phone__check is-open">
-              <Camera size={8} strokeWidth={2.4} />
-            </span>
-            <span>
-              <strong>Photograph control panel</strong>
-              <small>2 photos required</small>
-            </span>
-          </div>
-        </div>
-
-        <div className="hero-phone__cta">Capture inspection</div>
-      </div>
-
-      <p className="hero-stage__caption">
-        <XMark />
-        Self-initiated concept studies, not client work.
+        Concept interface preview
       </p>
     </div>
   );
 }
 
 export function Hero() {
-  // Reveal is applied to the section, so the headline, CTAs and panel enter
-  // together. Individual pieces have their own CSS animation delays.
   const ref = useReveal<HTMLElement>();
+  const [email, setEmail] = useState('');
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reducedMotion) return;
+
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      window.requestAnimationFrame(() => {
+        setScrollY(window.scrollY || 0);
+        ticking = false;
+      });
+    };
+
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
+  }, []);
+
+  const heroProgress = Math.min(scrollY / 520, 1);
+  const visualStyle = {
+    '--hero-p': heroProgress,
+    transform: `translate3d(0, ${heroProgress * 36}px, 0) scale(${1 - heroProgress * 0.045})`,
+    opacity: 1 - heroProgress * 0.12,
+  } as CSSProperties & { '--hero-p': number };
+
+  const onCtaSubmit = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const contact = document.getElementById('contact');
+    if (email.trim()) {
+      const contactEmail = document.querySelector<HTMLInputElement>(
+        '#contact input[type="email"], #contact input[name="email"], #contact input[name="EMAIL"]',
+      );
+      if (contactEmail) {
+        contactEmail.value = email.trim();
+        contactEmail.dispatchEvent(new Event('input', { bubbles: true }));
+        contactEmail.dispatchEvent(new Event('change', { bubbles: true }));
+      }
+    }
+    if (contact) {
+      contact.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      window.setTimeout(() => {
+        const focusTarget = document.querySelector<HTMLElement>(
+          '#contact input, #contact textarea, #contact button',
+        );
+        focusTarget?.focus({ preventScroll: true });
+      }, 350);
+    } else {
+      window.location.hash = site.hero.primaryCta.href;
+    }
+  };
 
   return (
     <section className="hero" id="top" ref={ref} aria-labelledby="hero-title">
-      <div className="container">
+      <div className="container hero__grid">
         <div className="hero__copy">
+          {site.hero.badge ? (
+            <p className="hero__badge">
+              <span className="hero__badge-label">{site.hero.badge.label}</span>
+              <span className="hero__badge-text">{site.hero.badge.text}</span>
+            </p>
+          ) : null}
+
           <h1 className="hero__title" id="hero-title">
             {site.hero.headline}
             <span className="hero__dot">.</span>
@@ -232,32 +205,49 @@ export function Hero() {
 
           <p className="hero__lede">{site.hero.intro}</p>
 
-          <div className="hero__actions">
-            <a className="btn btn--accent" href={site.hero.primaryCta.href}>
+          <form className="hero__cta" onSubmit={onCtaSubmit}>
+            <label className="sr-only" htmlFor="hero-email">
+              Work email
+            </label>
+            <input
+              id="hero-email"
+              className="hero__input"
+              type="email"
+              name="email"
+              inputMode="email"
+              autoComplete="email"
+              placeholder={site.hero.ctaPlaceholder ?? 'you@company.com'}
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+            />
+            <button className="btn btn--ink hero__submit" type="submit">
               {site.hero.primaryCta.label}
-              <ArrowUpRight className="btn__icon" size={17} strokeWidth={2} aria-hidden="true" />
-            </a>
-            <a className="btn btn--outline" href={site.hero.secondaryCta.href}>
+              <ArrowRight className="btn__icon" size={17} strokeWidth={2} aria-hidden="true" />
+            </button>
+          </form>
+
+          <div className="hero__actions-row">
+            <a className="text-link hero__secondary" href={site.hero.secondaryCta.href}>
               {site.hero.secondaryCta.label}
-              <ArrowDown className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
+              <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
             </a>
+            {site.hero.finePrint ? <p className="hero__fineprint">{site.hero.finePrint}</p> : null}
           </div>
 
-          <ul className="hero__capabilities" aria-label="What TechX does">
-            {capabilities.map((item) => {
-              const Icon = item.icon;
-              return (
-                <li key={item.label}>
-                  <Icon size={16} strokeWidth={1.8} aria-hidden="true" />
-                  {item.label}
+          {site.hero.trust?.length ? (
+            <ul className="hero__trust" aria-label="What to expect">
+              {site.hero.trust.map((item) => (
+                <li key={item}>
+                  <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" />
+                  <span>{item}</span>
                 </li>
-              );
-            })}
-          </ul>
+              ))}
+            </ul>
+          ) : null}
         </div>
 
-        <div className="hero__panel">
-          <HeroStage />
+        <div className="hero__visual-wrap" style={visualStyle}>
+          <HeroVisual />
         </div>
       </div>
     </section>
