@@ -299,6 +299,18 @@ export const projects: Project[] = [
     image: '/work/premium-academy.jpg',
     imageAlt: 'Premium Academy homepage with students in front of the school building.',
   },
+  {
+    id: 'famous-techx',
+    index: '04',
+    title: 'Famous TechX',
+    subtitle: 'School management platform',
+    description:
+      'A multi-tenant platform for Ghanaian schools: students, teachers, classes, scores, report cards, announcements and analytics in one secure workspace.',
+    tags: ['Web application', 'Education', 'SaaS'],
+    url: 'https://famoustechx.onrender.com/',
+    image: '/work/famous-techx.jpg',
+    imageAlt: 'Famous TechX landing page with its school management dashboard preview.',
+  },
 ];
 
 export const processSteps: ProcessStep[] = [
