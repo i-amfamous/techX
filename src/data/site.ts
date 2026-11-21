@@ -149,9 +149,34 @@ export const site = {
   },
 
   /**
-   * Optional generic JSON endpoint (Formspree, Basin, your own API…).
-   * Used only when `brevo.formAction` is empty. While both are empty the form
-   * runs in a honest demo mode and does not pretend to send anything.
+   * FORM-TO-EMAIL SERVICE (recommended delivery path)
+   *
+   * Inquiries are posted as JSON so the studio receives a clean notification
+   * and the visitor gets a matching thank-you note. Web3Forms is the default
+   * because it needs no account setup beyond a free access key; the recipient
+   * is tied to that key when it is created.
+   *
+   * 1. Get a free access key at https://web3forms.com for `recipient` below.
+   * 2. Paste the key into `accessKey`. Until then the form stays in demo mode.
+   * 3. Set up the branded emails in the service's dashboard: paste
+   *    `email-templates/inquiry-autoreply.html` into the auto-responder, and use
+   *    `inquiry-notification.html` for a custom notification where supported
+   *    (e.g. a Brevo automation). See README.md → "Inquiry emails".
+   */
+  email: {
+    provider: 'web3forms',
+    recipient: 'nganbewuborijaamos@gmail.com',
+    accessKey: '5e743f07-e4d4-4959-938b-0a1ceffbfc16',
+    endpoint: 'https://api.web3forms.com/submit',
+    notificationSubject: 'New project inquiry — TechX website',
+    autoReplySubject: 'We received your inquiry — TechX',
+  },
+
+  /**
+   * Optional generic JSON endpoint (Basin, your own API…).
+   * Used only when `brevo.formAction` and the email service above are both
+   * unconfigured. While nothing is configured the form runs in an honest demo
+   * mode and does not pretend to send anything.
    */
   formEndpoint: '',
 

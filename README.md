@@ -65,18 +65,26 @@ data, layout-specific wording next to the layout.
 
 ## The form, and why it does not fake success
 
-`Contact.tsx` supports a Brevo hosted form and, as a fallback, a generic JSON
-endpoint.
+`Contact.tsx` supports three delivery paths, checked in this order: a
+form-to-email service (recommended), an existing Brevo hosted form, and a
+generic JSON endpoint.
 
-- **Brevo (preferred):** paste the public action URL from the Brevo form into
+- **Email service (recommended):** the default is Web3Forms. Create a free
+  access key at <https://web3forms.com> for `nganbewuborijaamos@gmail.com` and
+  paste it into `site.email.accessKey` in `src/data/site.ts`. The browser POSTs
+  plain, named JSON fields, so no secret is shipped to the client and the
+  service builds a clean notification. The branded templates in
+  `email-templates/` are applied in the service's email settings; see
+  [Inquiry emails](#inquiry-emails). Requests abort after 15 seconds.
+- **Brevo:** paste the public action URL from the Brevo form into
   `site.brevo.formAction` in `src/data/site.ts`, and match the attribute names
   in `site.brevo.fields`. The browser submits a hidden native form to Brevo, so
   no API key is shipped. Set the Brevo form's recipient to the studio inbox.
-- **JSON endpoint:** set `site.formEndpoint` only when
-  `site.brevo.formAction` is empty. The component sends `POST` with `Accept:
-  application/json` and the fields `name`, `company`, `email`, `interests`,
-  `stage`, `message`, `submittedAt`, `source`. Requests abort after 15 seconds.
-- **Neither configured (current state):** the form validates, then shows a
+- **JSON endpoint:** set `site.formEndpoint` only when neither of the above is
+  configured. The component sends `POST` with `Accept: application/json` and
+  the fields `name`, `company`, `email`, `interests`, `stage`, `message`,
+  `submittedAt`, `source`. Requests abort after 15 seconds.
+- **Nothing configured (current state):** the form validates, then shows a
   preview of the inquiry with a copy button. It explicitly says nothing was
   sent. This is a demo, not a dead form pretending to work.
 - A hidden `website` field is a honeypot. Bots that fill it get a success screen
@@ -88,6 +96,46 @@ endpoint.
 Brevo forms with reCAPTCHA need that widget on the page; a plain form post will
 be rejected. Prefer a Brevo form without reCAPTCHA, or add the widget before
 connecting the action URL.
+
+## Inquiry emails
+
+Two branded HTML templates live in `email-templates/`. Both are table-based
+with inline styles, a 600px container, a mobile breakpoint and the same blue
+accent as the site, so they render consistently in Gmail, Outlook and Apple
+Mail without external CSS or web fonts.
+
+- `inquiry-notification.html` — the branded summary for
+  `nganbewuborijaamos@gmail.com`: sender name, company, reply address,
+  interests, stage, message and a one-click **Reply** button.
+- `inquiry-autoreply.html` — the thank-you note for the visitor. It confirms
+  receipt, promises a reply within one business day and sets out the three next
+  steps shown on the site.
+
+Placeholders use `{{name}}` syntax. The available tokens are `name`,
+`firstName`, `company`, `companyLine`, `email`, `interests`, `stage`, `message`
+(line breaks become `<br />`), `submittedAt`, `source` and `ownerEmail`.
+`src/lib/email.ts` fills and escapes them for any custom endpoint that accepts
+HTML. Web3Forms does not support an HTML body in a form post — extra fields are
+shown as raw text — so the form sends plain named fields and the templates are
+applied in the service's email settings instead.
+
+To connect delivery:
+
+1. Create a free Web3Forms access key at <https://web3forms.com> for
+   `nganbewuborijaamos@gmail.com` and paste it into `site.email.accessKey` in
+   `src/data/site.ts`. The key is public by design, like the Brevo action URL.
+2. Set up the thank-you email in the service's auto-responder settings using
+   `inquiry-autoreply.html` and the subject
+   `We received your inquiry — TechX`. Web3Forms includes auto-responders on
+   Pro; the free Brevo tier has automations that can send the same HTML.
+3. For a branded notification instead of the service's default, use the same
+   automation to email `nganbewuborijaamos@gmail.com` with
+   `inquiry-notification.html`. Otherwise the built-in Web3Forms notification
+   is already a clean list of the submitted fields.
+4. Submit a test inquiry from a phone and check both inboxes, including spam.
+
+If you use the Brevo hosted form, keep `site.brevo.formAction` filled and drive
+both branded emails from a Brevo automation triggered by the form submission.
 
 ## Accessibility
 
@@ -164,8 +212,9 @@ than inventing it. The UI falls back to a visible marker only as a safety net.
 ## Launch checklist
 
 1. Confirm the contact details in `site.owner` are current.
-2. Connect the Brevo form (`site.brevo.formAction`) and send a test inquiry from
-   a phone.
+2. Connect the email service (`site.email.accessKey`) and its auto-reply, or
+   the Brevo form (`site.brevo.formAction`), then send a test inquiry from a
+   phone.
 3. Confirm each live project link still works, and refresh its screenshot.
 4. Confirm every review has client permission; remove any that do not.
 5. Review `index.html` metadata and the structured data block.

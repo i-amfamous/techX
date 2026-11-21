@@ -1,5 +1,10 @@
 import { useEffect, useRef, useState, type FormEvent } from 'react';
 import { site, type ServiceId } from '../data/site';
+import {
+  buildEmailServicePayload,
+  emailServiceConfigured,
+  type Inquiry,
+} from '../lib/email';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import { ArrowUpRight, Check, ChevronDown, CircleAlert, Copy } from 'lucide-react';
 import './Contact.css';
@@ -12,10 +17,12 @@ import './Contact.css';
  * (`status`) and one success screen. Extracting them would add indirection
  * without making the flow easier to follow.
  *
- * Three paths matter:
- * - no endpoint configured: validate, then show a copyable preview (demo)
- * - endpoint configured: POST JSON, abort after 15s, show success or a retry
- * - honeypot filled: pretend success and send nothing
+ * Four paths matter:
+ * - Brevo action configured: native hidden form post, success on iframe load
+ * - email service configured: POST named JSON fields, abort after 15s
+ * - generic endpoint configured: POST plain JSON, abort after 15s
+ * - nothing configured: validate, then show a copyable preview (demo)
+ * A filled honeypot always pretends success and sends nothing.
  *
  * Client validation is for fast feedback only. Anything that receives this
  * form must validate again on the server.
@@ -94,11 +101,16 @@ function validate(values: FormValues): Errors {
   return errors;
 }
 
-function buildSummary(values: FormValues): string {
-  const interests = serviceOptions
+/** One place that turns selected ids into the labels shown in emails. */
+function serviceLabels(values: FormValues): string {
+  return serviceOptions
     .filter((option) => values.services.includes(option.value))
     .map((option) => option.label)
     .join(', ');
+}
+
+function buildSummary(values: FormValues): string {
+  const interests = serviceLabels(values);
 
   return [
     'TechX project inquiry',
@@ -125,10 +137,7 @@ function buildSummary(values: FormValues): string {
  */
 function submitToBrevo(values: FormValues): Promise<void> {
   return new Promise((resolve, reject) => {
-    const interests = serviceOptions
-      .filter((option) => values.services.includes(option.value))
-      .map((option) => option.label)
-      .join(', ');
+    const interests = serviceLabels(values);
 
     const fields: Record<string, string> = {
       [site.brevo.fields.email]: values.email.trim(),
@@ -293,7 +302,10 @@ export function Contact({ preselect }: ContactProps) {
     const composed = buildSummary(values);
     setSummary(composed);
 
-    if (!site.brevo.formAction && !site.formEndpoint) {
+    const endpointMissing =
+      !site.brevo.formAction && !emailServiceConfigured && !site.formEndpoint;
+
+    if (endpointMissing) {
       // Demo build: stop before any network call and show the inquiry instead.
       // This is the honest default, not an error state.
       setStatus('demo');
@@ -311,27 +323,53 @@ export function Contact({ preselect }: ContactProps) {
         const controller = new AbortController();
         const timeout = window.setTimeout(() => controller.abort(), 15000);
 
+        const inquiry: Inquiry = {
+          name: values.name.trim(),
+          company: values.company.trim(),
+          email: values.email.trim(),
+          interests: serviceLabels(values),
+          stage: values.stage,
+          message: values.message.trim(),
+          submittedAt: new Date().toISOString(),
+          source: 'techx-website',
+        };
+
+        // The configured email service takes priority over a generic endpoint.
+        const endpoint = emailServiceConfigured ? site.email.endpoint : site.formEndpoint;
+        const payload = emailServiceConfigured
+          ? buildEmailServicePayload(inquiry)
+          : {
+              name: inquiry.name,
+              company: inquiry.company,
+              email: inquiry.email,
+              interests: values.services,
+              stage: inquiry.stage,
+              message: inquiry.message,
+              submittedAt: inquiry.submittedAt,
+              source: inquiry.source,
+            };
+
         try {
-          const response = await fetch(site.formEndpoint, {
+          const response = await fetch(endpoint, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
               Accept: 'application/json',
             },
-            body: JSON.stringify({
-              name: values.name.trim(),
-              company: values.company.trim(),
-              email: values.email.trim(),
-              interests: values.services,
-              stage: values.stage,
-              message: values.message.trim(),
-              submittedAt: new Date().toISOString(),
-              source: 'techx-website',
-            }),
+            body: JSON.stringify(payload),
             signal: controller.signal,
           });
 
-          if (!response.ok) throw new Error('The form endpoint rejected the request.');
+          if (emailServiceConfigured) {
+            // Some services answer 200 with `{ success: false }` on a rejected
+            // submission, so check both signals before claiming success.
+            const result = await response.json().catch(() => null);
+            if (!response.ok || result?.success === false) {
+              throw new Error('The email service rejected the request.');
+            }
+          } else if (!response.ok) {
+            throw new Error('The form endpoint rejected the request.');
+          }
         } finally {
           window.clearTimeout(timeout);
         }
@@ -358,7 +396,8 @@ export function Contact({ preselect }: ContactProps) {
   };
 
   const resultVisible = status === 'success' || status === 'demo';
-  const endpointMissing = !site.brevo.formAction && !site.formEndpoint;
+  const endpointMissing =
+    !site.brevo.formAction && !emailServiceConfigured && !site.formEndpoint;
 
   return (
     <section className="section contact" id="contact" ref={ref} aria-labelledby="contact-title">
@@ -470,9 +509,10 @@ export function Contact({ preselect }: ContactProps) {
               ) : (
                 <>
                   <p className="contact-result__copy">
-                    This build has no form endpoint connected, so the inquiry was validated locally
-                    instead of being sent. Connect one in <code>src/data/site.ts</code> before
-                    launch, or copy the message below and send it through your own channel.
+                    This build has no email service connected, so the inquiry was validated locally
+                    instead of being sent. Add a Web3Forms access key in{' '}
+                    <code>src/data/site.ts</code> before launch, or copy the message below and send
+                    it through your own channel.
                   </p>
                   <pre className="contact-result__preview" aria-label="Inquiry preview">
                     {summary}
@@ -518,7 +558,7 @@ export function Contact({ preselect }: ContactProps) {
                 <p className="contact-form__demo-note">
                   <CircleAlert size={16} strokeWidth={2} aria-hidden="true" />
                   <span>
-                    Demo build: no email endpoint is connected. Submissions are validated but not
+                    Demo build: no email service is connected. Submissions are validated but not
                     sent.
                   </span>
                 </p>
