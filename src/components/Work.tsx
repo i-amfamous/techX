@@ -34,7 +34,7 @@ export function Work() {
                 href={project.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                aria-label={`${project.title} — visit live site (opens in a new tab)`}
+                aria-label={`${project.title}: visit live site (opens in a new tab)`}
               >
                 <img
                   className="project__shot"

@@ -103,13 +103,13 @@ function channelNote(inquiry) {
   const hasWhatsapp = Boolean(inquiry.whatsapp?.trim());
 
   if (hasWhatsapp && hasPhone) {
-    return '<strong style="color: #0f172a;">We have your phone and WhatsApp.</strong> If it helps move things faster, we may call or message you there — otherwise we will reply by email.';
+    return '<strong style="color: #0f172a;">We have your phone and WhatsApp.</strong> If it helps move things faster, we may call or message you there. Otherwise, we will reply by email.';
   }
   if (hasWhatsapp) {
-    return '<strong style="color: #0f172a;">We have your WhatsApp.</strong> If it helps, we may send a short message there — otherwise we will reply by email.';
+    return '<strong style="color: #0f172a;">We have your WhatsApp.</strong> If it helps, we may send a short message there. Otherwise, we will reply by email.';
   }
   if (hasPhone) {
-    return '<strong style="color: #0f172a;">We have your number.</strong> If it helps, we may give you a quick call — otherwise we will reply by email.';
+    return '<strong style="color: #0f172a;">We have your number.</strong> If it helps, we may give you a quick call. Otherwise, we will reply by email.';
   }
   return '<strong style="color: #0f172a;">Nothing else needed right now.</strong> If you think of something later, just reply to this message and it will reach us.';
 }
@@ -151,7 +151,7 @@ export function renderAutoReplyHtml(inquiry) {
 
 export function renderNotificationText(inquiry) {
   return [
-    'TechX — new project inquiry',
+    'TechX: new project inquiry',
     '',
     `Name: ${inquiry.name || 'Not provided'}`,
     `Company: ${inquiry.company || 'Not provided'}`,

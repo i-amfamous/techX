@@ -115,7 +115,7 @@ function validate(values: FormValues): Errors {
     errors.whatsapp = 'Enter a valid WhatsApp number, or leave this blank.';
   }
 
-  // A visitor can give either number, but not neither — the studio needs a
+  // A visitor can give either number, but not neither. The studio needs a
   // way to reach them when email is too slow.
   if (!values.phone.trim() && !values.whatsapp.trim()) {
     errors.contact = 'Please add a phone number or a WhatsApp number so we can reach you.';
@@ -662,7 +662,7 @@ export function Contact({ preselect }: ContactProps) {
 
                 <div className="field field--full">
                   <p className="field__hint" id="contact-contact-hint">
-                    Phone or WhatsApp — please give at least one so we can reach you quickly.
+                    Phone or WhatsApp: please give at least one so we can reach you quickly.
                   </p>
                   {errors.contact && (
                     <p className="field__error" id="contact-contact-error" role="alert">

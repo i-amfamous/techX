@@ -166,8 +166,8 @@ export const site = {
     endpoint: '/.netlify/functions/inquiry',
     recipient: 'nganbewuborijaamos@gmail.com',
     fromName: 'TechX',
-    notificationSubject: 'New project inquiry — TechX website',
-    autoReplySubject: 'We received your inquiry — TechX',
+    notificationSubject: 'New project inquiry | TechX website',
+    autoReplySubject: 'We received your inquiry | TechX',
   },
 
   /**

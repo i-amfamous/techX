@@ -103,11 +103,11 @@ with inline styles, a 600px container, a mobile breakpoint and the same blue
 accent as the site, so they render consistently in Gmail, Outlook and Apple
 Mail without external CSS or web fonts.
 
-- `inquiry-notification.html` — the briefing for
+- `inquiry-notification.html`: the briefing for
   `nganbewuborijaamos@gmail.com`. It shows the sender's name, company, email,
   **phone and WhatsApp**, interests, stage and message, with one-click **Reply**,
   **Call** and **WhatsApp** buttons when those details were provided.
-- `inquiry-autoreply.html` — the thank-you note for the visitor. It confirms
+- `inquiry-autoreply.html`: the thank-you note for the visitor. It confirms
   receipt, promises a reply within one business day, sets out the three next
   steps and says how the studio may use the contact numbers they shared.
 
@@ -129,11 +129,11 @@ To connect delivery:
 2. In Netlify, go to **Site configuration → Environment variables** and add
    **only** `BREVO_API_KEY`, marked as a secret. The other two variables are
    optional: `BREVO_SENDER_EMAIL` and `INQUIRY_TO_EMAIL` already default to the
-   studio inbox in the function. Do not flag them as secrets — that address is
+   studio inbox in the function. Do not flag them as secrets. That address is
    printed publicly on the site, so Netlify's secret scanner will find its
    value in the build output and fail the deploy. If you do set them, create
    them as ordinary variables without the "Contains secret values" flag.
-3. Deploy with `netlify.toml` — build command `npm run build`, publish `dist`,
+3. Deploy with `netlify.toml`: build command `npm run build`, publish `dist`,
    functions directory `netlify/functions`. Redeploy after changing variables.
 4. Submit a test inquiry from a phone. The studio inbox should receive the
    briefing and the sender should receive the acknowledgement; check spam too.

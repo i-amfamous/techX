@@ -14,7 +14,7 @@ export function Highlights() {
             Built for teams that want <em>clarity and momentum.</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            The strongest digital products are not just attractive — they are useful, usable, and designed to keep improving.
+            The strongest digital products are not just attractive. They are useful, usable, and designed to keep improving.
           </p>
         </div>
 

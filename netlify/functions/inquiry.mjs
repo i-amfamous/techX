@@ -25,8 +25,8 @@ const BREVO_ENDPOINT = 'https://api.brevo.com/v3/smtp/email';
 const OWNER_EMAIL = process.env.INQUIRY_TO_EMAIL || 'nganbewuborijaamos@gmail.com';
 const SENDER_EMAIL = process.env.BREVO_SENDER_EMAIL || OWNER_EMAIL;
 const FROM_NAME = 'TechX';
-const NOTIFICATION_SUBJECT = 'New project inquiry — TechX website';
-const ACK_SUBJECT = 'We received your inquiry — TechX';
+const NOTIFICATION_SUBJECT = 'New project inquiry | TechX website';
+const ACK_SUBJECT = 'We received your inquiry | TechX';
 
 const json = (status, body) => ({
   statusCode: status,
