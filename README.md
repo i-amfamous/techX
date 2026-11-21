@@ -126,9 +126,12 @@ To connect delivery:
    address (`nganbewuborijaamos@gmail.com`) under **Senders &amp; domains**, then
    create an API key with transactional email sending rights.
 2. In Netlify, go to **Site configuration → Environment variables** and add
-   `BREVO_API_KEY`, `BREVO_SENDER_EMAIL` and optionally `INQUIRY_TO_EMAIL`.
-   `.env.example` lists them. Environment variables are secrets: never commit
-   the key.
+   **only** `BREVO_API_KEY`, marked as a secret. The other two variables are
+   optional: `BREVO_SENDER_EMAIL` and `INQUIRY_TO_EMAIL` already default to the
+   studio inbox in the function. Do not flag them as secrets — that address is
+   printed publicly on the site, so Netlify's secret scanner will find its
+   value in the build output and fail the deploy. If you do set them, create
+   them as ordinary variables without the "Contains secret values" flag.
 3. Deploy with `netlify.toml` — build command `npm run build`, publish `dist`,
    functions directory `netlify/functions`. Redeploy after changing variables.
 4. Submit a test inquiry from a phone. The studio inbox should receive the
