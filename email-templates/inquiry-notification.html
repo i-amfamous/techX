@@ -14,154 +14,131 @@
       </xml>
     <![endif]-->
     <style>
-      /* Client resets */
-      body,
-      table,
-      td,
-      a {
-        -webkit-text-size-adjust: 100%;
-        -ms-text-size-adjust: 100%;
-      }
-      table {
-        border-collapse: collapse !important;
-        mso-table-lspace: 0pt;
-        mso-table-rspace: 0pt;
-      }
-      img {
-        border: 0;
-        outline: none;
-        text-decoration: none;
-        -ms-interpolation-mode: bicubic;
-      }
-      a {
-        text-decoration: none;
-      }
-      /* Preview text: hidden in the body, shown in the inbox snippet */
+      body, table, td, a { -webkit-text-size-adjust: 100%; -ms-text-size-adjust: 100%; }
+      table { border-collapse: collapse !important; mso-table-lspace: 0pt; mso-table-rspace: 0pt; }
+      a { text-decoration: none; }
       .preheader {
-        display: none !important;
-        visibility: hidden;
-        mso-hide: all;
-        font-size: 1px;
-        line-height: 1px;
-        max-height: 0;
-        max-width: 0;
-        opacity: 0;
-        overflow: hidden;
+        display: none !important; visibility: hidden; mso-hide: all;
+        font-size: 1px; line-height: 1px; max-height: 0; max-width: 0;
+        opacity: 0; overflow: hidden;
       }
-      /* Responsive */
       @media screen and (max-width: 620px) {
-        .wrapper {
-          width: 100% !important;
-        }
-        .px {
-          padding-left: 24px !important;
-          padding-right: 24px !important;
-        }
-        .stack {
-          display: block !important;
-          width: 100% !important;
-          box-sizing: border-box;
-        }
-        .stack-spacer {
-          display: block !important;
-          height: 14px !important;
-          line-height: 14px !important;
-          font-size: 14px !important;
-        }
-        .value-right {
-          text-align: left !important;
-          padding-left: 0 !important;
-          padding-top: 4px !important;
-        }
-        .button {
-          display: block !important;
-          text-align: center !important;
-        }
+        .wrapper { width: 100% !important; }
+        .px { padding-left: 24px !important; padding-right: 24px !important; }
+        .stack { display: block !important; width: 100% !important; box-sizing: border-box; }
+        .stack-spacer { display: block !important; height: 14px !important; font-size: 14px !important; line-height: 14px !important; }
+        .value-right { text-align: left !important; padding-left: 0 !important; padding-top: 4px !important; }
+        .cell { display: block !important; width: 100% !important; box-sizing: border-box; padding-bottom: 16px !important; }
+        .cell-last { padding-bottom: 0 !important; }
+        .button { display: block !important; text-align: center !important; }
+        .btn { display: block !important; box-sizing: border-box !important; }
       }
       @media (prefers-color-scheme: dark) {
-        .card,
-        .detail-card {
-          background-color: #ffffff !important;
-        }
+        .card, .detail-card, .contact-strip { background-color: #ffffff !important; }
       }
     </style>
   </head>
-  <body style="margin: 0; padding: 0; background-color: #f3f4f6; font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #0f172a;">
-    <div class="preheader">New inquiry from {{name}}{{companyLine}} — {{interests}}</div>
+  <body style="margin: 0; padding: 0; background-color: #eef2f7; font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; color: #0f172a;">
+    <div class="preheader">New inquiry from {{name}}{{companyLine}} · {{interests}}</div>
 
-    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #f3f4f6;">
+    <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #eef2f7;">
       <tr>
         <td align="center" style="padding: 40px 16px;">
           <table role="presentation" class="wrapper" width="600" cellpadding="0" cellspacing="0" border="0" style="width: 600px; max-width: 600px;">
 
-            <!-- Top accent rule -->
+            <!-- Brand -->
             <tr>
-              <td style="height: 4px; line-height: 4px; font-size: 0; background-color: #2563eb; border-radius: 14px 14px 0 0;">&nbsp;</td>
+              <td class="px" style="padding: 0 40px 18px;">
+                <table role="presentation" cellpadding="0" cellspacing="0" border="0">
+                  <tr>
+                    <td style="width: 38px; height: 38px; border-radius: 11px; background-color: #0f172a; text-align: center; vertical-align: middle;">
+                      <span style="display: inline-block; line-height: 38px; font-family: Inter, Arial, sans-serif; font-size: 19px; font-weight: 800; color: #2563eb;">X</span>
+                    </td>
+                    <td style="padding-left: 12px; vertical-align: middle;">
+                      <div style="font-size: 19px; font-weight: 700; letter-spacing: -0.045em; line-height: 1.1; color: #0f172a;">TechX</div>
+                      <div style="font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: #64748b; line-height: 1.4;">Ideas, made useful</div>
+                    </td>
+                  </tr>
+                </table>
+              </td>
             </tr>
 
             <!-- Card -->
             <tr>
-              <td class="card" style="background-color: #ffffff; border: 1px solid #e5e7eb; border-top: 0; border-radius: 0 0 18px 18px;">
-
-                <!-- Brand header -->
+              <td class="card" style="background-color: #ffffff; border: 1px solid #e2e8f0; border-radius: 20px;">
                 <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                   <tr>
-                    <td class="px" style="padding: 28px 40px 22px;">
-                      <span style="font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 21px; font-weight: 700; letter-spacing: -0.05em; color: #0f172a;">Tech<span style="color: #2563eb;">X</span></span>
-                      <span style="font-size: 9px; font-weight: 600; color: #94a3b8; vertical-align: top; letter-spacing: 0;">&reg;</span>
-                      <div style="margin-top: 4px; font-size: 11px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: #64748b;">Technology &amp; creative studio</div>
-                    </td>
-                    <td class="px" align="right" style="padding: 28px 40px 22px;">
-                      <span style="display: inline-block; padding: 6px 12px; border: 1px solid #dbeafe; border-radius: 999px; background-color: #eff6ff; font-size: 11px; font-weight: 600; letter-spacing: 0.02em; color: #1d4ed8;">Website inquiry</span>
+                    <td style="height: 5px; line-height: 5px; font-size: 0; background-color: #2563eb; border-radius: 20px 20px 0 0;">&nbsp;</td>
+                  </tr>
+
+                  <!-- Hero -->
+                  <tr>
+                    <td class="px" style="padding: 34px 40px 30px; background-color: #f5f8ff; border-radius: 15px 15px 0 0;">
+                      <span style="display: inline-block; padding: 6px 12px; border-radius: 999px; background-color: #dbeafe; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #1d4ed8;">New inquiry</span>
+                      <h1 style="margin: 16px 0 0; font-size: 27px; line-height: 1.25; font-weight: 700; letter-spacing: -0.035em; color: #0f172a;">A new project just landed.</h1>
+                      <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.65; color: #475569;">{{firstName}} sent a note through the TechX website. Everything you need to follow up is right here.</p>
                     </td>
                   </tr>
-                </table>
 
-                <!-- Hero -->
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color: #eff6ff;">
+                  <!-- Contact strip -->
                   <tr>
-                    <td class="px" style="padding: 30px 40px;">
-                      <h1 style="margin: 0; font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 26px; line-height: 1.25; font-weight: 700; letter-spacing: -0.03em; color: #0f172a;">New project inquiry</h1>
-                      <p style="margin: 10px 0 0; font-size: 14px; line-height: 1.6; color: #475569;">A visitor sent a note through the TechX contact form. The details are below so you can reply right away.</p>
-                    </td>
-                  </tr>
-                </table>
-
-                <!-- Details -->
-                <table role="presentation" class="detail-card" width="100%" cellpadding="0" cellspacing="0" border="0" style="margin: 28px 40px 0; width: calc(100% - 80px); border: 1px solid #e5e7eb; border-radius: 14px;">
-                  <tr>
-                    <td style="padding: 8px 22px;">
-                      <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                    <td class="px" style="padding: 26px 40px 0;">
+                      <table role="presentation" class="contact-strip" width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #e2e8f0; border-radius: 14px;">
                         <tr>
-                          <td class="stack" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Name</td>
-                          <td class="stack value-right" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 14px; font-weight: 600; color: #0f172a;">{{name}}</td>
-                        </tr>
-                        <tr>
-                          <td class="stack" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Company</td>
-                          <td class="stack value-right" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 14px; font-weight: 600; color: #0f172a;">{{company}}</td>
-                        </tr>
-                        <tr>
-                          <td class="stack" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Email</td>
-                          <td class="stack value-right" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 14px; font-weight: 600; color: #0f172a;"><a href="mailto:{{email}}" style="color: #2563eb;">{{email}}</a></td>
-                        </tr>
-                        <tr>
-                          <td class="stack" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Interested in</td>
-                          <td class="stack value-right" style="padding: 14px 0; border-bottom: 1px solid #eef2f7; font-size: 14px; font-weight: 600; color: #0f172a;">{{interests}}</td>
-                        </tr>
-                        <tr>
-                          <td class="stack" style="padding: 14px 0; font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Stage</td>
-                          <td class="stack value-right" style="padding: 14px 0; font-size: 14px; font-weight: 600; color: #0f172a;">{{stage}}</td>
+                          <td class="cell" width="33%" valign="top" style="padding: 18px 16px;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Email</div>
+                            <div style="margin-top: 7px; font-size: 13px; line-height: 1.5; font-weight: 600; word-break: break-word;"><a href="mailto:{{email}}" style="color: #2563eb;">{{email}}</a></div>
+                          </td>
+                          <td class="cell" width="33%" valign="top" style="padding: 18px 16px; border-left: 1px solid #eef2f7;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Phone · call</div>
+                            <div style="margin-top: 7px; font-size: 13px; line-height: 1.5; font-weight: 600;">{{phoneBlock}}</div>
+                          </td>
+                          <td class="cell cell-last" width="33%" valign="top" style="padding: 18px 16px; border-left: 1px solid #eef2f7;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">WhatsApp</div>
+                            <div style="margin-top: 7px; font-size: 13px; line-height: 1.5; font-weight: 600;">{{whatsappBlock}}</div>
+                          </td>
                         </tr>
                       </table>
                     </td>
                   </tr>
-                </table>
 
-                <!-- Message -->
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <!-- Details -->
                   <tr>
-                    <td class="px" style="padding: 28px 40px 0;">
-                      <div style="font-size: 11px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: #94a3b8;">Their message</div>
+                    <td class="px" style="padding: 26px 40px 0;">
+                      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">At a glance</div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="px" style="padding: 12px 40px 0;">
+                      <table role="presentation" class="detail-card" width="100%" cellpadding="0" cellspacing="0" border="0" style="border: 1px solid #e2e8f0; border-radius: 14px;">
+                        <tr>
+                          <td class="stack" style="padding: 14px 20px; border-bottom: 1px solid #eef2f7;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Name</div>
+                            <div style="margin-top: 5px; font-size: 14px; font-weight: 600; color: #0f172a;">{{name}}</div>
+                          </td>
+                          <td class="stack" style="padding: 14px 20px; border-bottom: 1px solid #eef2f7; border-left: 1px solid #eef2f7;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Company</div>
+                            <div style="margin-top: 5px; font-size: 14px; font-weight: 600; color: #0f172a;">{{company}}</div>
+                          </td>
+                        </tr>
+                        <tr>
+                          <td class="stack" style="padding: 14px 20px;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Interested in</div>
+                            <div style="margin-top: 5px; font-size: 14px; font-weight: 600; color: #0f172a;">{{interests}}</div>
+                          </td>
+                          <td class="stack" style="padding: 14px 20px; border-left: 1px solid #eef2f7;">
+                            <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Stage</div>
+                            <div style="margin-top: 5px; font-size: 14px; font-weight: 600; color: #0f172a;">{{stage}}</div>
+                          </td>
+                        </tr>
+                      </table>
+                    </td>
+                  </tr>
+
+                  <!-- Message -->
+                  <tr>
+                    <td class="px" style="padding: 26px 40px 0;">
+                      <div style="font-size: 10px; font-weight: 700; letter-spacing: 0.11em; text-transform: uppercase; color: #94a3b8;">Their message</div>
                     </td>
                   </tr>
                   <tr>
@@ -169,37 +146,28 @@
                       <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
                         <tr>
                           <td style="width: 3px; font-size: 0; line-height: 0; background-color: #2563eb; border-radius: 3px;">&nbsp;</td>
-                          <td style="padding: 16px 20px; background-color: #f8fafc; border-radius: 0 10px 10px 0; font-size: 14px; line-height: 1.7; color: #334155;">{{message}}</td>
+                          <td style="padding: 18px 22px; background-color: #f8fafc; border-radius: 0 12px 12px 0; font-size: 14px; line-height: 1.75; color: #334155;">{{message}}</td>
                         </tr>
                       </table>
                     </td>
                   </tr>
-                </table>
 
-                <!-- Call to action -->
-                <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0">
+                  <!-- Quick actions -->
                   <tr>
                     <td class="px" style="padding: 30px 40px 34px;">
-                      <table role="presentation" cellpadding="0" cellspacing="0" border="0">
-                        <tr>
-                          <td class="button" style="border-radius: 999px; background-color: #2563eb;">
-                            <a href="mailto:{{email}}?subject=Re%3A%20your%20TechX%20inquiry" style="display: inline-block; padding: 13px 24px; border-radius: 999px; background-color: #2563eb; color: #ffffff; font-family: Inter, 'Helvetica Neue', Helvetica, Arial, sans-serif; font-size: 14px; font-weight: 600; text-decoration: none;">Reply to {{firstName}} &rarr;</a>
-                          </td>
-                        </tr>
-                      </table>
-                      <p style="margin: 14px 0 0; font-size: 12px; line-height: 1.6; color: #94a3b8;">Received {{submittedAt}} &middot; Source: {{source}}</p>
+                      {{quickActions}}
+                      <p style="margin: 16px 0 0; font-size: 11px; line-height: 1.6; color: #94a3b8;">Received {{submittedAt}} &middot; Source: {{source}}</p>
                     </td>
                   </tr>
                 </table>
-
               </td>
             </tr>
 
             <!-- Footer -->
             <tr>
               <td style="padding: 20px 16px 0; text-align: center;">
-                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #94a3b8;">TechX &middot; Ideas, made useful<br />Ghana &middot; Working remotely</p>
-                <p style="margin: 10px 0 0; font-size: 11px; line-height: 1.6; color: #cbd5e1;">This notification was sent because someone submitted the inquiry form on the TechX website.</p>
+                <p style="margin: 0; font-size: 11px; line-height: 1.6; color: #94a3b8;">TechX &middot; Technology &amp; creative studio &middot; Ghana, working remotely</p>
+                <p style="margin: 8px 0 0; font-size: 11px; line-height: 1.6; color: #cbd5e1;">This briefing was generated because someone submitted the inquiry form on the TechX website.</p>
               </td>
             </tr>
 

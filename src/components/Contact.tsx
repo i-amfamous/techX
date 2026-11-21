@@ -36,13 +36,17 @@ interface FormValues {
   name: string;
   company: string;
   email: string;
+  phone: string;
+  whatsapp: string;
   services: string[];
   stage: string;
   message: string;
   website: string;
 }
 
-type Errors = Partial<Record<'name' | 'email' | 'services' | 'message', string>>;
+type Errors = Partial<
+  Record<'name' | 'email' | 'phone' | 'whatsapp' | 'services' | 'message', string>
+>;
 type Status = 'idle' | 'submitting' | 'success' | 'demo' | 'error';
 type CopyStatus = 'idle' | 'copied' | 'failed';
 
@@ -50,6 +54,8 @@ const initialValues: FormValues = {
   name: '',
   company: '',
   email: '',
+  phone: '',
+  whatsapp: '',
   services: [],
   stage: '',
   message: '',
@@ -73,9 +79,19 @@ const stageOptions = [
 const fieldFocusIds: Record<keyof Errors, string> = {
   name: 'contact-name',
   email: 'contact-email',
+  phone: 'contact-phone',
+  whatsapp: 'contact-whatsapp',
   services: 'contact-service-web',
   message: 'contact-message',
 };
+
+/** Loose phone check: enough to catch typos without rejecting country formats. */
+function validPhone(value: string): boolean {
+  const trimmed = value.trim();
+  if (!trimmed) return true;
+  if (!/^[+()\d\s-]+$/.test(trimmed)) return false;
+  return trimmed.replace(/\D/g, '').length >= 7 && trimmed.length <= 60;
+}
 
 function validate(values: FormValues): Errors {
   const errors: Errors = {};
@@ -88,6 +104,14 @@ function validate(values: FormValues): Errors {
 
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(values.email.trim())) {
     errors.email = 'Enter a valid email address so the studio can reply.';
+  }
+
+  if (!validPhone(values.phone)) {
+    errors.phone = 'Enter a valid phone number, or leave this blank.';
+  }
+
+  if (!validPhone(values.whatsapp)) {
+    errors.whatsapp = 'Enter a valid WhatsApp number, or leave this blank.';
   }
 
   if (values.services.length === 0) {
@@ -118,6 +142,8 @@ function buildSummary(values: FormValues): string {
     `Name: ${values.name.trim()}`,
     `Company: ${values.company.trim() || 'Not provided'}`,
     `Email: ${values.email.trim()}`,
+    `Phone: ${values.phone.trim() || 'Not provided'}`,
+    `WhatsApp: ${values.whatsapp.trim() || 'Not provided'}`,
     `Interested in: ${interests || 'Not provided'}`,
     `Stage: ${values.stage || 'Not provided'}`,
     '',
@@ -143,6 +169,8 @@ function submitToBrevo(values: FormValues): Promise<void> {
       [site.brevo.fields.email]: values.email.trim(),
       [site.brevo.fields.name]: values.name.trim(),
       [site.brevo.fields.company]: values.company.trim(),
+      [site.brevo.fields.phone]: values.phone.trim(),
+      [site.brevo.fields.whatsapp]: values.whatsapp.trim(),
       [site.brevo.fields.interests]: interests,
       [site.brevo.fields.stage]: values.stage,
       [site.brevo.fields.message]: values.message.trim(),
@@ -327,6 +355,8 @@ export function Contact({ preselect }: ContactProps) {
           name: values.name.trim(),
           company: values.company.trim(),
           email: values.email.trim(),
+          phone: values.phone.trim(),
+          whatsapp: values.whatsapp.trim(),
           interests: serviceLabels(values),
           stage: values.stage,
           message: values.message.trim(),
@@ -510,9 +540,8 @@ export function Contact({ preselect }: ContactProps) {
                 <>
                   <p className="contact-result__copy">
                     This build has no email service connected, so the inquiry was validated locally
-                    instead of being sent. Add a Web3Forms access key in{' '}
-                    <code>src/data/site.ts</code> before launch, or copy the message below and send
-                    it through your own channel.
+                    instead of being sent. Follow the setup in <code>README.md</code> before launch,
+                    or copy the message below and send it through your own channel.
                   </p>
                   <pre className="contact-result__preview" aria-label="Inquiry preview">
                     {summary}
@@ -620,6 +649,52 @@ export function Contact({ preselect }: ContactProps) {
                   {errors.email && (
                     <p className="field__error" id="contact-email-error" role="alert">
                       {errors.email}
+                    </p>
+                  )}
+                </div>
+
+                <div className="field">
+                  <label htmlFor="contact-phone">
+                    Phone number <span className="field__optional">Optional</span>
+                  </label>
+                  <input
+                    id="contact-phone"
+                    name="phone"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    placeholder="+233 24 000 0000"
+                    value={values.phone}
+                    onChange={(event) => update('phone', event.target.value)}
+                    aria-invalid={Boolean(errors.phone)}
+                    aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
+                  />
+                  {errors.phone && (
+                    <p className="field__error" id="contact-phone-error" role="alert">
+                      {errors.phone}
+                    </p>
+                  )}
+                </div>
+
+                <div className="field">
+                  <label htmlFor="contact-whatsapp">
+                    WhatsApp number <span className="field__optional">Optional</span>
+                  </label>
+                  <input
+                    id="contact-whatsapp"
+                    name="whatsapp"
+                    type="tel"
+                    inputMode="tel"
+                    autoComplete="tel"
+                    placeholder="Same as phone, or a different number"
+                    value={values.whatsapp}
+                    onChange={(event) => update('whatsapp', event.target.value)}
+                    aria-invalid={Boolean(errors.whatsapp)}
+                    aria-describedby={errors.whatsapp ? 'contact-whatsapp-error' : undefined}
+                  />
+                  {errors.whatsapp && (
+                    <p className="field__error" id="contact-whatsapp-error" role="alert">
+                      {errors.whatsapp}
                     </p>
                   )}
                 </div>
@@ -740,7 +815,8 @@ export function Contact({ preselect }: ContactProps) {
                   <ArrowUpRight className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
                 </button>
                 <p className="contact-form__privacy">
-                  Your details will only be used to respond to this inquiry. No list, no sharing.
+                  Your email, phone and WhatsApp are used only to respond to this inquiry. No list,
+                  no sharing.
                 </p>
               </div>
             </form>

@@ -142,6 +142,8 @@ export const site = {
       email: 'EMAIL',
       name: 'FIRSTNAME',
       company: 'COMPANY',
+      phone: 'PHONE',
+      whatsapp: 'WHATSAPP',
       interests: 'INTERESTS',
       stage: 'STAGE',
       message: 'MESSAGE',
@@ -149,25 +151,21 @@ export const site = {
   },
 
   /**
-   * FORM-TO-EMAIL SERVICE (recommended delivery path)
+   * INQUIRY DELIVERY
    *
-   * Inquiries are posted as JSON so the studio receives a clean notification
-   * and the visitor gets a matching thank-you note. Web3Forms is the default
-   * because it needs no account setup beyond a free access key; the recipient
-   * is tied to that key when it is created.
+   * The form posts to the Netlify function in `netlify/functions/inquiry.mjs`,
+   * which sends two branded emails through Brevo: a briefing to the studio and
+   * an acknowledgement to the visitor. Both show "TechX" as the sender name.
    *
-   * 1. Get a free access key at https://web3forms.com for `recipient` below.
-   * 2. Paste the key into `accessKey`. Until then the form stays in demo mode.
-   * 3. Set up the branded emails in the service's dashboard: paste
-   *    `email-templates/inquiry-autoreply.html` into the auto-responder, and use
-   *    `inquiry-notification.html` for a custom notification where supported
-   *    (e.g. a Brevo automation). See README.md → "Inquiry emails".
+   * The function needs `BREVO_API_KEY` (and optionally `BREVO_SENDER_EMAIL`)
+   * as Netlify environment variables. Without the key it returns an error, so
+   * a broken deployment is visible rather than silently losing inquiries.
+   * See README.md → "Inquiry emails" for the full setup.
    */
   email: {
-    provider: 'web3forms',
+    endpoint: '/.netlify/functions/inquiry',
     recipient: 'nganbewuborijaamos@gmail.com',
-    accessKey: '5e743f07-e4d4-4959-938b-0a1ceffbfc16',
-    endpoint: 'https://api.web3forms.com/submit',
+    fromName: 'TechX',
     notificationSubject: 'New project inquiry — TechX website',
     autoReplySubject: 'We received your inquiry — TechX',
   },
