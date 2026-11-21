@@ -45,7 +45,7 @@ interface FormValues {
 }
 
 type Errors = Partial<
-  Record<'name' | 'email' | 'phone' | 'whatsapp' | 'services' | 'message', string>
+  Record<'name' | 'email' | 'contact' | 'phone' | 'whatsapp' | 'services' | 'message', string>
 >;
 type Status = 'idle' | 'submitting' | 'success' | 'demo' | 'error';
 type CopyStatus = 'idle' | 'copied' | 'failed';
@@ -79,6 +79,7 @@ const stageOptions = [
 const fieldFocusIds: Record<keyof Errors, string> = {
   name: 'contact-name',
   email: 'contact-email',
+  contact: 'contact-phone',
   phone: 'contact-phone',
   whatsapp: 'contact-whatsapp',
   services: 'contact-service-web',
@@ -112,6 +113,12 @@ function validate(values: FormValues): Errors {
 
   if (!validPhone(values.whatsapp)) {
     errors.whatsapp = 'Enter a valid WhatsApp number, or leave this blank.';
+  }
+
+  // A visitor can give either number, but not neither — the studio needs a
+  // way to reach them when email is too slow.
+  if (!values.phone.trim() && !values.whatsapp.trim()) {
+    errors.contact = 'Please add a phone number or a WhatsApp number so we can reach you.';
   }
 
   if (values.services.length === 0) {
@@ -653,10 +660,19 @@ export function Contact({ preselect }: ContactProps) {
                   )}
                 </div>
 
+                <div className="field field--full">
+                  <p className="field__hint" id="contact-contact-hint">
+                    Phone or WhatsApp — please give at least one so we can reach you quickly.
+                  </p>
+                  {errors.contact && (
+                    <p className="field__error" id="contact-contact-error" role="alert">
+                      {errors.contact}
+                    </p>
+                  )}
+                </div>
+
                 <div className="field">
-                  <label htmlFor="contact-phone">
-                    Phone number <span className="field__optional">Optional</span>
-                  </label>
+                  <label htmlFor="contact-phone">Phone number</label>
                   <input
                     id="contact-phone"
                     name="phone"
@@ -666,8 +682,10 @@ export function Contact({ preselect }: ContactProps) {
                     placeholder="+233 24 000 0000"
                     value={values.phone}
                     onChange={(event) => update('phone', event.target.value)}
-                    aria-invalid={Boolean(errors.phone)}
-                    aria-describedby={errors.phone ? 'contact-phone-error' : undefined}
+                    aria-invalid={Boolean(errors.contact || errors.phone)}
+                    aria-describedby={`contact-contact-hint${
+                      errors.contact ? ' contact-contact-error' : ''
+                    }${errors.phone ? ' contact-phone-error' : ''}`}
                   />
                   {errors.phone && (
                     <p className="field__error" id="contact-phone-error" role="alert">
@@ -677,9 +695,7 @@ export function Contact({ preselect }: ContactProps) {
                 </div>
 
                 <div className="field">
-                  <label htmlFor="contact-whatsapp">
-                    WhatsApp number <span className="field__optional">Optional</span>
-                  </label>
+                  <label htmlFor="contact-whatsapp">WhatsApp number</label>
                   <input
                     id="contact-whatsapp"
                     name="whatsapp"
@@ -689,8 +705,10 @@ export function Contact({ preselect }: ContactProps) {
                     placeholder="Same as phone, or a different number"
                     value={values.whatsapp}
                     onChange={(event) => update('whatsapp', event.target.value)}
-                    aria-invalid={Boolean(errors.whatsapp)}
-                    aria-describedby={errors.whatsapp ? 'contact-whatsapp-error' : undefined}
+                    aria-invalid={Boolean(errors.contact || errors.whatsapp)}
+                    aria-describedby={`contact-contact-hint${
+                      errors.contact ? ' contact-contact-error' : ''
+                    }${errors.whatsapp ? ' contact-whatsapp-error' : ''}`}
                   />
                   {errors.whatsapp && (
                     <p className="field__error" id="contact-whatsapp-error" role="alert">

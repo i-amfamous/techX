@@ -72,9 +72,10 @@ sends two emails through Brevo's transactional API: a briefing to the studio
 inbox and a branded acknowledgement to the visitor. Both show **TechX** as the
 sender name.
 
-Alongside the email address, the form asks for an optional phone number and an
-optional WhatsApp number, so the studio can call or message when that is
-quicker than email. Both numbers are validated client- and server-side.
+Alongside the email address, the form requires **at least one** of a phone
+number or a WhatsApp number, so the studio can call or message when that is
+quicker than email. Visitors choose which one to share; both are validated
+client- and server-side.
 
 - **Primary path:** function + Brevo. The URL lives in `site.email.endpoint`.
   The function needs `BREVO_API_KEY` as a Netlify environment variable; without

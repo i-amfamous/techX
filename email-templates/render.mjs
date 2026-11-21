@@ -200,8 +200,11 @@ export function validateInquiry(inquiry) {
   if (name.length < 2 || name.length > 120) return { error: 'Please provide your name.' };
   if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) return { error: 'Please provide a valid email address.' };
   if (message.length < 20 || message.length > 10000) return { error: 'Please tell us a little more about the project.' };
-  if (text('phone', 60).length > 60) return { error: 'The phone number is too long.' };
-  if (text('whatsapp', 60).length > 60) return { error: 'The WhatsApp number is too long.' };
+  const phone = text('phone', 60);
+  const whatsapp = text('whatsapp', 60);
+  if (phone.length > 60) return { error: 'The phone number is too long.' };
+  if (whatsapp.length > 60) return { error: 'The WhatsApp number is too long.' };
+  if (!phone && !whatsapp) return { error: 'Please provide a phone number or a WhatsApp number.' };
 
   return { ok: true };
 }
