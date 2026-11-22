@@ -344,6 +344,18 @@ export const projects: Project[] = [
     image: '/work/famous-techx.jpg',
     imageAlt: 'Famous TechX landing page with its school management dashboard preview.',
   },
+  {
+    id: 'famous-techx-pos',
+    index: '05',
+    title: 'Famous TechX POS',
+    subtitle: 'Point-of-sale platform',
+    description:
+      'A browser-based till for retail teams: barcode and SKU lookup, carts with discounts and tax, stock alerts, multiple branches, cashier shifts and cash drawer checks, plus sales and profit reports.',
+    tags: ['Web application', 'Point of sale', 'Retail operations'],
+    url: 'https://famoustechxpos.onrender.com/login',
+    image: '/work/famous-techx-pos.jpg',
+    imageAlt: 'Famous TechX POS sign-in screen.',
+  },
 ];
 
 export const processSteps: ProcessStep[] = [

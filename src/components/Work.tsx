@@ -22,7 +22,7 @@ export function Work() {
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
             Live products and websites built for real businesses. Every card links to the running
-            site, so you can use it rather than take our word for it.
+            site, so you can see it for yourself.
           </p>
         </div>
 
