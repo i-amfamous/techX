@@ -1,9 +1,10 @@
 # TechX website
 
-The TechX studio site: a single responsive page built with React, TypeScript and
-hand-written CSS. No UI kit, no utility framework, no build magic beyond Vite.
-The goal was a small, readable codebase that a studio can hand to any competent
-front-end developer without a tour.
+The TechX studio site: a responsive multi-page website built with React,
+TypeScript and hand-written CSS. No UI kit, no utility framework, no routing
+dependency, and no build magic beyond Vite. The goal was a small, readable
+codebase that a studio can hand to any competent front-end developer without a
+tour.
 
 ## Quick start
 
@@ -20,30 +21,35 @@ npm run build      # typecheck, then production bundle in dist/
 npm run preview    # serve dist/ locally
 ```
 
-Node 18 or newer is assumed. The page itself is static, but inquiry delivery
-uses a Netlify Function, so deploy to Netlify (see `netlify.toml`) to get the
-contact form working. Other static hosts will serve the site without email.
+Node 18 or newer is assumed. The pages themselves are static, but inquiry
+delivery uses a Netlify Function, so deploy to Netlify (see `netlify.toml`) to
+get the contact form working. Other static hosts will serve the site without
+email.
 
-## What is on the page
+## Pages
 
-Sections render in this order, all from `src/App.tsx`:
+`src/App.tsx` maps URLs to pages. `src/lib/router.tsx` is a small history router:
+internal links use `Link`, the active nav item follows the current URL, and
+`netlify.toml` serves the built app for direct visits to any page.
 
-| Section | Component | Notes |
+| URL | Page | Main component |
 | --- | --- | --- |
-| Hero | `Hero` | Statement, CTAs, and a decorative concept collage |
-| Capability ticker | `Ticker` | Infinite CSS marquee, pauses on hover |
-| Services | `Services` | Accordion, one panel open at a time |
-| Solutions | `Solutions` | Four illustrative use cases |
-| Work | `Work` | Live client projects with screenshots and outbound links |
-| Reviews | `Reviews` | Client feedback, published with permission |
-| Process | `Process` | Sticky intro beside five numbered phases |
-| Studio | `Studio` | Principles and a "how we work" panel |
-| FAQ | `Faq` | Accordion, first answer open |
-| Contact | `Contact` | Validated inquiry form with phone and WhatsApp fields |
-| Footer | `Footer` | Navigation, statement, back to top |
+| `/` | Home | `Hero` with a real project image, `Ticker`, `Highlights`, page map |
+| `/services` | Services | Unique hero, then the `Services` accordion |
+| `/solutions` | Solutions | Unique hero, then `Solutions` scenarios |
+| `/work` | Work | Unique hero, then the `Work` project gallery |
+| `/process` | Process | Unique hero, then `Process` phases |
+| `/studio` | Studio | Unique hero, then `Studio` principles |
+| `/reviews` | Reviews | Unique hero, then `Reviews` cards |
+| `/faq` | FAQ | Unique hero, then the `Faq` accordion |
+| `/contact` | Contact | Unique hero, then the `Contact` inquiry form |
+| anything else | 404 | `NotFound` |
 
 Each section has its own component, most have a matching CSS file. Shared
-tokens, resets, type and button styles live in `src/styles/base.css`.
+tokens, resets, type and button styles live in `src/styles/base.css`. Page
+chrome (breadcrumb, tailored hero, and redesigned closing CTA) lives in
+`src/pages/PageUi.tsx`. The homepage hero image is `/work/famous-techx.jpg`;
+swap it in `src/components/Hero.tsx` when a better project shot is available.
 
 ## Editing content
 
@@ -51,14 +57,20 @@ Almost every string lives in `src/data/site.ts`. That file is the content
 boundary: a copywriter or studio owner should be able to work there without
 touching JSX.
 
+The copy follows a problem first pattern: name the friction the client feels,
+show what TechX builds to remove it, then state what the client can do
+afterwards. Keep that order when editing headlines, service copy and CTAs.
+Page specific headlines and closing invitations live in `src/pages/Pages.tsx`
+and `src/pages/Home.tsx`.
+
 - `site` holds the hero copy, CTAs, the form endpoint, and owner contact
   details.
 - `services`, `solutions`, `projects`, `processSteps`, `principles`, `reviews`
   and `faqs` are plain arrays. Order in the array is order on the page.
 - Project screenshots live in `public/work/`. Retake one when the live site
   changes, using the same 900px-wide crop so the cards stay aligned.
-- `navLinks` drives both the desktop navigation and the scroll spy. Keep `href`
-  values in sync with section ids.
+- `navLinks` drives both the desktop and mobile navigation. Keep `href` values
+  in sync with the URLs in `src/App.tsx`.
 
 Component-level copy (headings, small labels, button text inside a section) sits
 in that section's `.tsx` file. This was a deliberate split: structured content in
@@ -196,7 +208,8 @@ Content is real and attributable:
 - `site.owner` holds the studio's public email, working location and GitHub
   profile. Update it in `src/data/site.ts` if those details change.
 - Work cards link to live projects and use screenshots captured from those
-  sites. The hero collage is still labelled as concept UI.
+  sites. The homepage hero uses the Famous TechX screenshot inside a browser
+  style preview, labelled as a live project rather than a concept.
 - Reviews are published with client permission. Do not add quotes, names or
   ratings without approval.
 - No metrics, awards, pricing or delivery timelines are claimed.

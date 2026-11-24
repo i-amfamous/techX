@@ -25,18 +25,18 @@ export function Studio() {
       <div className="container">
         <div className="studio__top">
           <h2 className="section-title reveal" id="studio-title" style={revealDelay(0)}>
-            Design and engineering, in the <em>same room.</em>
+            Built by the people you <em>talk to.</em>
           </h2>
 
           <div className="studio__lead reveal" style={revealDelay(1)}>
             <p className="studio__statement">
-              TechX is a technology and creative studio. We bring design and engineering into one
-              conversation, so what you launch is what you set out to build.
+              The same people who understand your problem are the ones who design and build the
+              answer. No handover between a strategy team and a delivery team.
             </p>
             <p>
-              Every engagement starts with the same question: what is the real problem? From there
-              we make the complicated parts clear, agree on the work, and build something your team
-              can own and extend.
+              Every engagement starts with one question: what is actually getting in the way? From
+              there we make the complicated parts clear, agree on the work, and build something your
+              team can own.
             </p>
           </div>
         </div>
@@ -54,7 +54,6 @@ export function Studio() {
 
           <aside className="studio__panel reveal" style={revealDelay(2)} aria-label="How we work together">
             <div className="studio__panel-head">
-              <span className="micro">Working together</span>
               <XMark />
             </div>
             <ul className="studio__panel-list">

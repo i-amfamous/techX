@@ -12,10 +12,11 @@ export function Reviews() {
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="reviews-title" style={revealDelay(0)}>
-            Client <em>reviews.</em>
+            What clients say after <em>working with us.</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            Real feedback from people we have worked with, published with their permission.
+            Real feedback, published with permission. Clear questions, visible progress, and work
+            that landed.
           </p>
         </div>
 

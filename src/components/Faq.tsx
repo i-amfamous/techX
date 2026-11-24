@@ -1,6 +1,7 @@
 import { ArrowUpRight, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
 import { faqs } from '../data/site';
+import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import './Faq.css';
 
@@ -22,16 +23,16 @@ export function Faq() {
       <div className="container faq__layout">
         <div className="faq__intro">
           <h2 className="section-title reveal" id="faq-title" style={revealDelay(0)}>
-            Questions, answered <em>plainly.</em>
+            The answers you need before you <em>commit.</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            The practical things companies ask before starting a project. If yours is not here, ask
-            it directly.
+            How we start, what we need from you, and what you own at the end. If your question is not
+            here, ask it directly.
           </p>
-          <a className="text-link faq__link reveal" href="#contact" style={revealDelay(2)}>
+          <Link className="text-link faq__link reveal" href="/contact" style={revealDelay(2)}>
             Ask a question
             <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
 
         <div className="faq__list reveal" style={revealDelay(1)}>

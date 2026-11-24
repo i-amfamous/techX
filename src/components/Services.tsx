@@ -1,6 +1,7 @@
 import { ArrowUpRight, Check, ChevronDown, Globe, Palette, Smartphone } from 'lucide-react';
 import { useState } from 'react';
 import { services, type ServiceId } from '../data/site';
+import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import './Services.css';
 
@@ -32,11 +33,11 @@ export function Services({ onDiscuss }: ServicesProps) {
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="services-title" style={revealDelay(0)}>
-            Three ways to move from <em>idea</em> to impact.
+            What we build, and <em>why</em> it matters.
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            Most projects need more than one discipline. We can shape the product, build it, and make
-            sure it looks and sounds like the business behind it.
+            Each discipline removes a different kind of friction. Most teams need more than one, so
+            we join them up instead of handing you between specialists.
           </p>
         </div>
 
@@ -106,14 +107,14 @@ export function Services({ onDiscuss }: ServicesProps) {
                       <div className="service__aside">
                         <p className="service__label">Good for</p>
                         <p className="service__good">{service.goodFor}</p>
-                        <a
+                        <Link
                           className="text-link"
-                          href="#contact"
+                          href="/contact"
                           onClick={() => onDiscuss(service.id)}
                         >
                           Discuss a project
                           <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-                        </a>
+                        </Link>
                       </div>
                     </div>
                   </div>

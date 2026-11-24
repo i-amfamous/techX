@@ -1,5 +1,6 @@
 import { ArrowUpRight, Globe, Info, LayoutGrid, Palette, Smartphone } from 'lucide-react';
 import { solutions, type ServiceId } from '../data/site';
+import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import './Solutions.css';
 
@@ -30,11 +31,11 @@ export function Solutions({ onDiscuss }: SolutionsProps) {
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="solutions-title" style={revealDelay(0)}>
-            What a TechX engagement could look <em>like.</em>
+            Recognise one of <em>these?</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            Common business problems, and the kind of product we might build around them. Every
-            engagement starts with discovery, so the real answer may look different.
+            Common problems and the products we would build to solve them. These are examples, not a
+            menu. Discovery is where your actual scope gets set.
           </p>
           <p className="solutions__disclaimer reveal" style={revealDelay(2)}>
             <Info size={14} strokeWidth={2} aria-hidden="true" />
@@ -71,14 +72,14 @@ export function Solutions({ onDiscuss }: SolutionsProps) {
                   ))}
                 </ul>
 
-                <a
+                <Link
                   className="text-link solution__link"
-                  href="#contact"
+                  href="/contact"
                   onClick={() => onDiscuss(solution.service)}
                 >
                   Discuss a project like this
                   <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-                </a>
+                </Link>
               </article>
             );
           })}

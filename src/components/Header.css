@@ -70,12 +70,12 @@
 }
 
 .site-nav__link:hover,
-.site-nav__link[aria-current='location'] {
+.site-nav__link[aria-current='page'] {
   color: var(--ink);
 }
 
 .site-nav__link:hover::after,
-.site-nav__link[aria-current='location']::after {
+.site-nav__link[aria-current='page']::after {
   transform: scaleX(1);
   transform-origin: left;
 }
@@ -176,6 +176,10 @@
   transition:
     transform 0.3s var(--ease),
     color 0.3s var(--ease);
+}
+
+.mobile-menu__list a[aria-current='page'] {
+  color: var(--accent);
 }
 
 .mobile-menu__list a:hover .mobile-menu__arrow,

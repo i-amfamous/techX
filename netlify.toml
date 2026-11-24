@@ -5,3 +5,10 @@
 
 [build.environment]
   NODE_VERSION = "20"
+
+# Each section has its own URL. Serve the built app for direct page loads while
+# still letting Netlify handle static assets and functions first.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

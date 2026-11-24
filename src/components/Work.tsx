@@ -18,11 +18,11 @@ export function Work() {
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="work-title" style={revealDelay(0)}>
-            Selected <em>work.</em>
+            Proof you can open in a <em>browser.</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            Live products and websites built for real businesses. Every card links to the running
-            site, so you can see it for yourself.
+            Each project solved a real operational need. Open the live site and see what the result
+            actually looks like.
           </p>
         </div>
 

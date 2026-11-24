@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react';
 import { processSteps } from '../data/site';
+import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import { XMark } from './Wordmark';
 import './Process.css';
@@ -19,10 +20,11 @@ export function Process() {
       <div className="container process__layout">
         <div className="process__intro">
           <h2 className="section-title reveal" id="process-title" style={revealDelay(0)}>
-            A clear path from question to <em>launch.</em>
+            Five phases, no <em>surprises.</em>
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            No black box. Each phase has a purpose, a visible output, and a moment for you to steer.
+            You will always know what is happening, what you are approving, and what comes next. Each
+            phase ends with something you can see and react to.
           </p>
 
           <div className="process__note reveal" style={revealDelay(2)}>
@@ -35,10 +37,10 @@ export function Process() {
             </p>
           </div>
 
-          <a className="text-link process__link reveal" href="#contact" style={revealDelay(3)}>
+          <Link className="text-link process__link reveal" href="/contact" style={revealDelay(3)}>
             Talk through your project
             <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
 
         <ol className="process__list">

@@ -94,14 +94,10 @@
 .studio__panel-head {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  justify-content: flex-end;
   gap: 12px;
   padding-bottom: 14px;
   border-bottom: 1px solid var(--line);
-}
-
-.studio__panel-head .micro {
-  color: var(--muted);
 }
 
 .studio__panel-head .xmark {

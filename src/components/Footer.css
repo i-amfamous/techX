@@ -1,10 +1,11 @@
 /* ==========================================================================
-   Footer · dark close
+   Footer · dark close, on its own surface below the CTA
    ========================================================================== */
 
 .footer {
   padding-block: clamp(56px, 7vw, 88px) 26px;
-  background: var(--ink);
+  border-top: 1px solid rgba(255, 255, 255, 0.16);
+  background: #0b1220;
   color: #f6f6f1;
 }
 
@@ -20,17 +21,6 @@
 .footer__wordmark {
   font-size: clamp(2.4rem, 5vw, 4rem);
   letter-spacing: -0.06em;
-}
-
-.footer__cta {
-  display: flex;
-  align-items: center;
-  gap: 20px;
-}
-
-.footer__cta p {
-  color: rgba(246, 246, 241, 0.58);
-  font-size: 0.92rem;
 }
 
 .footer__main {
@@ -142,12 +132,6 @@
 }
 
 @media (max-width: 620px) {
-  .footer__cta {
-    align-items: flex-start;
-    flex-direction: column;
-    gap: 14px;
-  }
-
   .footer__cols {
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 26px;

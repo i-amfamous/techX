@@ -1,4 +1,5 @@
-import { ArrowUp, ArrowUpRight } from 'lucide-react';
+import { ArrowUp } from 'lucide-react';
+import { Link } from '../lib/router';
 import { Wordmark, XMark } from './Wordmark';
 import './Footer.css';
 
@@ -6,25 +7,25 @@ const columns = [
   {
     title: 'Explore',
     links: [
-      { href: '#services', label: 'Services' },
-      { href: '#solutions', label: 'Solutions' },
-      { href: '#work', label: 'Work' },
-      { href: '#reviews', label: 'Reviews' },
+      { href: '/services', label: 'Services' },
+      { href: '/solutions', label: 'Solutions' },
+      { href: '/work', label: 'Work' },
+      { href: '/reviews', label: 'Reviews' },
     ],
   },
   {
     title: 'Studio',
     links: [
-      { href: '#process', label: 'Process' },
-      { href: '#studio', label: 'About the studio' },
-      { href: '#faq', label: 'FAQ' },
+      { href: '/process', label: 'Process' },
+      { href: '/studio', label: 'About the studio' },
+      { href: '/faq', label: 'FAQ' },
     ],
   },
   {
     title: 'Start',
     links: [
-      { href: '#contact', label: 'Project inquiry' },
-      { href: '#top', label: 'Back to top' },
+      { href: '/contact', label: 'Project inquiry' },
+      { href: '/', label: 'Back to home' },
     ],
   },
 ];
@@ -32,9 +33,9 @@ const columns = [
 /**
  * Site footer.
  *
- * The link columns intentionally repeat the primary navigation. On a
- * single-page site a footer is a second chance to navigate, not a sitemap; it
- * carries no invented legal pages, addresses or registration numbers.
+ * The link columns now point to the individual pages, so the footer works as
+ * a sitemap as well as a second chance to navigate. No invented legal pages,
+ * addresses or registration numbers.
  */
 export function Footer() {
   // Computed per render so the copyright does not need an annual edit.
@@ -44,26 +45,18 @@ export function Footer() {
     <footer className="footer on-ink">
       <div className="container">
         <div className="footer__top">
-          <a className="footer__brand-link" href="#top" aria-label="TechX, back to top">
+          <Link className="footer__brand-link" href="/" aria-label="TechX, home">
             <Wordmark className="footer__wordmark" />
-          </a>
-
-          <div className="footer__cta">
-            <p>Have a problem worth solving?</p>
-            <a className="btn btn--bone" href="#contact">
-              Start a project
-              <ArrowUpRight className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
-            </a>
-          </div>
+          </Link>
         </div>
 
         <div className="footer__main">
           <div className="footer__statement">
             <XMark />
             <p>
-              Technology &amp; creative studio
+              Web applications, mobile apps, and brand systems
               <br />
-              Web · Mobile · Brand identity
+              built around the problems you need solved.
             </p>
           </div>
 
@@ -74,7 +67,7 @@ export function Footer() {
                 <ul>
                   {column.links.map((link) => (
                     <li key={link.href}>
-                      <a href={link.href}>{link.label}</a>
+                      <Link href={link.href}>{link.label}</Link>
                     </li>
                   ))}
                 </ul>
@@ -88,10 +81,10 @@ export function Footer() {
           <p className="footer__disclaimer">
             Selected work links to live projects. Client reviews are published only with permission.
           </p>
-          <a className="footer__top-link" href="#top">
+          <Link className="footer__top-link" href="/">
             Back to top
             <ArrowUp size={14} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </footer>

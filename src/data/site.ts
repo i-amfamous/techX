@@ -85,44 +85,41 @@ export interface Highlight {
 export const site = {
   hero: {
     // Keep the headline short enough to sit on one line on desktop.
-    badge: {
-      label: 'New',
-      text: 'Building web, mobile, and brand systems for growing teams',
-    },
-    headline: 'Ideas, made useful',
+    headline: 'Turn the problem into a product',
     intro:
-      'TechX is a technology and creative studio. We design and build web applications, mobile apps, and brand identities that turn a clear idea into something people can use.',
-    primaryCta: { label: 'Start a project', href: '#contact' },
-    secondaryCta: { label: 'See our work', href: '#work' },
+      'Still running key work on spreadsheets, email threads, and tools that almost fit? TechX designs and builds the web applications, mobile apps, and brand systems that remove the friction, so your team can move with clarity.',
+    primaryCta: { label: 'Start a project', href: '/contact' },
+    secondaryCta: { label: 'See our work', href: '/work' },
     ctaPlaceholder: 'you@company.com',
     finePrint: 'Based in Ghana · Working remotely · Reply within 1 business day',
     trust: [
-      'Web applications, iOS & Android apps, and brand identities',
-      'From discovery and design to build, launch, and support',
+      'We start with your workflow, not a feature list',
+      'Design and engineering in one team, from first call to handover',
+      'Live products you can visit before you decide',
     ],
   },
 
   highlights: [
     {
       badge: 'Discovery',
-      title: 'Product thinking before production.',
+      title: 'We find the real problem before we build.',
       summary:
-        'We turn fuzzy goals into a clear roadmap, so teams know what is being built, why it matters, and what success looks like.',
-      details: ['Workflow mapping', 'Opportunity framing', 'Decision-ready scope'],
+        'Most briefs describe a symptom. We map how the work actually happens, agree on what success looks like, and put a scope in writing before anyone writes code.',
+      details: ['Workflow mapping', 'Success criteria', 'Decision-ready scope'],
     },
     {
       badge: 'Delivery',
-      title: 'Design and build as one system.',
+      title: 'One team from design to launch.',
       summary:
-        'Strategy, UX, and engineering move together so the final product feels coherent from the first click to launch day.',
+        'Strategy, interfaces, and engineering move together. You see working software early and can steer it, instead of waiting for one big reveal at the end.',
       details: ['Prototype-driven iteration', 'Accessible interfaces', 'Launch support'],
     },
     {
-      badge: 'Scale',
-      title: 'The product keeps improving after launch.',
+      badge: 'After launch',
+      title: 'You own it, and it keeps working.',
       summary:
-        'We build for extension, analytics, and real operational use so the next round of changes is easier and less risky.',
-      details: ['Integrations', 'Metrics & reporting', 'Design system continuity'],
+        'We document the decisions, hand over the code and design system, and leave you with a product your team can extend without depending on us.',
+      details: ['Documentation', 'Design system continuity', 'Support arrangement'],
     },
   ] as Highlight[],
 
@@ -192,15 +189,15 @@ export const services: Service[] = [
     id: 'web',
     index: '01',
     title: 'Web application development',
-    tagline: 'Internal tools, customer portals, and platforms built around how your business actually works.',
+    tagline: 'Replace the spreadsheets and near-fit tools with one system built around how your team actually works.',
     problem:
-      'The work runs on spreadsheets, email threads, and software that almost fits. Data is entered twice, nobody is sure which version is current, and the tools slow the team down instead of helping.',
+      'Routine work lives in spreadsheets and inboxes. The same data gets entered twice, nobody is sure which version is right, and the tools slow the team down instead of helping.',
     approach:
-      'We design and build web applications around the real workflow: internal tools, customer portals, dashboards, booking systems, and platforms that need to be dependable every day. Clear interfaces, sensible data models, and room to grow.',
+      'We map the real workflow first, then build an application that fits it: internal tools, customer portals, dashboards, booking systems, and platforms your team can depend on every day.',
     deliverables: [
-      'Product scoping and user flows',
+      'Workflow mapping and product scoping',
       'Custom web application development',
-      'Dashboards and data views',
+      'Dashboards and reports people actually use',
       'APIs and third-party integrations',
       'Accessibility, performance, and launch support',
     ],
@@ -210,15 +207,15 @@ export const services: Service[] = [
     id: 'mobile',
     index: '02',
     title: 'iOS & Android app development',
-    tagline: 'Mobile products with a native feel, including the unglamorous parts like offline behaviour and release support.',
+    tagline: 'Give field teams and customers tools that work with poor signal, one hand, and real deadlines.',
     problem:
-      'A mobile experience that feels slow, breaks without signal, or asks customers to do too much gets deleted. Field teams need tools that work in bad conditions, not just at a desk.',
+      'An app that feels slow, breaks without signal, or asks people to do too much gets abandoned. Field teams need tools that work out in the world, not just at a desk.',
     approach:
-      'We build mobile products for iOS and Android, from customer-facing apps to tools for people working away from a desk. Considered touch ergonomics, reliable offline behaviour, and a release process you can trust.',
+      'We design for the conditions the app will actually be used in, then build for iOS and Android with offline data, sensible touch targets, and a release process you can trust.',
     deliverables: [
       'Mobile product and interaction design',
       'iOS and Android development',
-      'Offline-first data and sync',
+      'Offline-first data and background sync',
       'Push notifications and device features',
       'App Store and Google Play release support',
     ],
@@ -228,11 +225,11 @@ export const services: Service[] = [
     id: 'brand',
     index: '03',
     title: 'Graphic design & brand identity',
-    tagline: 'A visual system that says one clear thing across your site, your product, and your pitch deck.',
+    tagline: 'One clear identity across your site, product, and sales materials, so every touchpoint earns trust.',
     problem:
-      'When the logo, website, deck, and app all feel like different companies, trust drops. A brand that is not written down is expensive to apply and easy to dilute as the team grows.',
+      'When the logo, website, deck, and app feel like different companies, confidence drops. A brand that is not written down is expensive to apply and easy to dilute as the team grows.',
     approach:
-      'We create clear, practical identities: positioning, logotype and marks, typography, colour, art direction, and the design system that keeps it coherent across print and screen.',
+      'We agree the positioning first, then build a practical identity system: logotype, typography, colour, art direction, and guidelines your team can apply without starting from scratch each time.',
     deliverables: [
       'Brand strategy and positioning',
       'Logotype, marks, and visual identity',
@@ -251,9 +248,9 @@ export const solutions: Solution[] = [
     tag: 'Operations',
     title: 'The business has outgrown the spreadsheet.',
     situation:
-      'Core work is spread across spreadsheets, inboxes, and a legacy tool nobody wants to touch. Handovers get lost and reporting takes a day of copy-paste.',
+      'Core work is split across spreadsheets, inboxes, and a legacy tool nobody wants to touch. Handovers get lost, reporting takes a day of copy-paste, and decisions wait on stale numbers.',
     approach:
-      'We map the real workflow, then build a focused internal web application with roles, approvals, audit history, and the reports the team actually needs.',
+      'We map the workflow as it really happens, then build a focused internal application with roles, approvals, audit history, and the reports the team actually needs to act on.',
     blocks: ['Workflow mapping', 'Roles & permissions', 'Reporting', 'Data migration'],
     service: 'web',
   },
@@ -263,9 +260,9 @@ export const solutions: Solution[] = [
     tag: 'Customer experience',
     title: 'Customers keep asking for the same things by email.',
     situation:
-      'Onboarding, documents, order updates, and support all happen through a shared inbox. Customers cannot find answers and the team cannot see the whole relationship.',
+      'Onboarding, documents, order updates, and support all land in a shared inbox. Customers cannot find answers, and the team cannot see the whole relationship in one place.',
     approach:
-      'We design a secure self-service portal: clear onboarding steps, the documents people need, notifications, and integrations with the systems already in use.',
+      'We design a secure self-service portal that lets customers help themselves: clear onboarding steps, the documents they need, timely notifications, and links to the systems you already use.',
     blocks: ['Secure sign-in', 'Self-service flows', 'Notifications', 'System integrations'],
     service: 'web',
   },
@@ -275,9 +272,9 @@ export const solutions: Solution[] = [
     tag: 'Field operations',
     title: 'The work happens away from a desk.',
     situation:
-      'Technicians, inspectors, or crews capture information on paper or in photos, then re-enter it at the end of the day. Details arrive late, incomplete, or not at all.',
+      'Technicians, inspectors, and crews capture information on paper or in photos, then re-enter it at the end of the day. Details arrive late, incomplete, or not at all.',
     approach:
-      'We build an offline-first mobile app for checklists, photos, notes, and signatures, designed for one hand, bright sun, and no signal. Data syncs when the connection returns.',
+      'We build an offline-first mobile app for checklists, photos, notes, and signatures, designed for one hand, bright sun, and no signal. Data syncs as soon as the connection returns.',
     blocks: ['Offline capture', 'Guided checklists', 'Photo & signature capture', 'Background sync'],
     service: 'mobile',
   },
@@ -287,9 +284,9 @@ export const solutions: Solution[] = [
     tag: 'Brand',
     title: 'The company has changed. The brand has not.',
     situation:
-      'The business has grown into a more capable, more premium company, but the visual identity still looks like the early days. Every new deck and page is designed from scratch.',
+      'The business is more capable than it was, but the identity still looks like the early days. Every new deck, page, and proposal gets designed from scratch, and the message drifts.',
     approach:
-      'We reposition the identity, create a distinctive visual system, and apply it to the places that matter first: the website, product UI, and sales materials.',
+      'We agree the positioning, build a distinctive visual system, and apply it where it matters first: the website, the product interface, and the sales materials your team uses every week.',
     blocks: ['Positioning', 'Identity system', 'Design tokens', 'Brand guidelines'],
     service: 'brand',
   },
@@ -302,7 +299,7 @@ export const projects: Project[] = [
     title: 'SwifTek Accessories',
     subtitle: 'E-commerce storefront',
     description:
-      'A live tech store for Ghana: category browsing, product detail pages, search, cart, and checkout flows for iPhones, MacBooks, laptops, and accessories.',
+      'An online store for a tech retailer that needed to sell beyond walk-in traffic. Category browsing, search, product pages, cart, and checkout, built for shoppers on any device.',
     tags: ['Web application', 'E-commerce', 'Responsive UI'],
     url: 'https://swiftek.onrender.com',
     image: '/work/swiftek.jpg',
@@ -314,7 +311,7 @@ export const projects: Project[] = [
     title: 'AgricWorld',
     subtitle: 'Agriculture website',
     description:
-      'A multi-page marketing site for a Ghanaian organic farming business, covering its services, story, and contact details in a clean responsive layout.',
+      'A clear, credible web presence for an organic farming business that needed to explain what it does and make it easy for buyers and partners to get in touch.',
     tags: ['Website', 'Brand presentation', 'Responsive'],
     url: 'https://agricweb.vercel.app/',
     image: '/work/agricweb.jpg',
@@ -326,7 +323,7 @@ export const projects: Project[] = [
     title: 'Premium Academy',
     subtitle: 'School management system',
     description:
-      'A school platform covering creche through university, with programme pages, admissions calls to action, and a responsive structure for parents and students.',
+      'A school website that organises programmes from creche to university and turns parent interest into clear admissions enquiries on any screen.',
     tags: ['Web application', 'Education', 'Multi-page'],
     url: 'https://school-management-pied-six.vercel.app/',
     image: '/work/premium-academy.jpg',
@@ -338,7 +335,7 @@ export const projects: Project[] = [
     title: 'Famous TechX',
     subtitle: 'School management platform',
     description:
-      'A multi-tenant platform for Ghanaian schools: students, teachers, classes, scores, report cards, announcements and analytics in one secure workspace.',
+      'A multi-tenant platform that brought students, teachers, classes, scores, report cards, announcements, and analytics into one secure workspace instead of scattered files.',
     tags: ['Web application', 'Education', 'SaaS'],
     url: 'https://famoustechx.onrender.com/',
     image: '/work/famous-techx.jpg',
@@ -350,7 +347,7 @@ export const projects: Project[] = [
     title: 'Famous TechX POS',
     subtitle: 'Point-of-sale platform',
     description:
-      'A browser-based till for retail teams: barcode and SKU lookup, carts with discounts and tax, stock alerts, multiple branches, cashier shifts and cash drawer checks, plus sales and profit reports.',
+      'A browser-based till that gives retail teams fast checkout, stock alerts, multiple branches, cashier shifts, and daily sales and profit reports without a fragile spreadsheet trail.',
     tags: ['Web application', 'Point of sale', 'Retail operations'],
     url: 'https://famoustechxpos.onrender.com/login',
     image: '/work/famous-techx-pos.jpg',
@@ -363,41 +360,41 @@ export const processSteps: ProcessStep[] = [
     number: '01',
     title: 'Listen & define',
     summary:
-      'We start with the problem, not the feature list. Conversations with the people who use the product and the people who run the business.',
+      'We start with where the work breaks, not with a feature list. We talk to the people doing the work and the people accountable for it.',
     activities: ['Stakeholder conversations', 'Constraints and context', 'Success criteria', 'Scope and priorities'],
-    outcome: 'A clear brief, a recommended approach, and a scope you can react to.',
+    outcome: 'A written brief, a recommended approach, and a scope you can approve or question.',
   },
   {
     number: '02',
     title: 'Shape the experience',
     summary:
-      'We make the complicated parts visible before anything is built: the structure, the flows, and the visual direction.',
+      'We make the messy parts visible before building anything: the structure, the flows, and the screens people will actually use.',
     activities: ['Information architecture', 'User flows and wireframes', 'Visual direction', 'Design system foundations'],
-    outcome: 'Flows and designs you can review, question, and improve.',
+    outcome: 'Flows and designs you can review and change before development starts.',
   },
   {
     number: '03',
     title: 'Design & build',
     summary:
-      'Design and engineering work together in short, visible cycles. You see working software, not just status updates.',
+      'Design and engineering move in short, visible cycles. You see working software early and react to it, instead of waiting for a final reveal.',
     activities: ['Interface design', 'Front-end and back-end build', 'Design system in code', 'Regular check-ins'],
-    outcome: 'Working software in a staging environment, reviewed together.',
+    outcome: 'Working software in staging, reviewed with you at each milestone.',
   },
   {
     number: '04',
     title: 'Test & launch',
     summary:
-      'We test on real devices, tighten the details, and prepare the release. Launch day should be a checklist, not a surprise.',
+      'We test on the devices your people use, tighten the details, and prepare the release so launch day is a checklist rather than a surprise.',
     activities: ['Cross-device QA', 'Accessibility and performance checks', 'Deployment', 'Store submission where relevant'],
-    outcome: 'A production release, a launch record, and a clear rollback path.',
+    outcome: 'A live release, a launch record, and a clear rollback path.',
   },
   {
     number: '05',
     title: 'Support & handover',
     summary:
-      'The work should outlive the engagement. We document what was built and help your team take it forward.',
+      'The product should keep working after we step back. We document the decisions and help your team take ownership with confidence.',
     activities: ['Documentation', 'Walkthroughs and training', 'Support arrangement', 'Next-phase roadmap'],
-    outcome: 'A codebase and design system your team can own and extend.',
+    outcome: 'Code, design files, and documentation your team can own and extend.',
   },
 ];
 
@@ -472,22 +469,22 @@ export const principles: Principle[] = [
   {
     number: '01',
     title: 'Clarity before decoration',
-    text: 'The interface should explain the business, not show off. We spend time on structure, language, and hierarchy before surface styling.',
+    text: 'We work out what your product needs to do before how it should look. That keeps the build focused on the work, not on the visuals.',
   },
   {
     number: '02',
     title: 'Design and engineering together',
-    text: 'The people shaping the experience and the people building it work as one team, so decisions survive the handover.',
+    text: 'The people shaping the experience and the people writing the code work as one team, so what you approve is what gets built.',
   },
   {
     number: '03',
-    title: 'Build for the day after launch',
-    text: 'Maintainable code, documented decisions, and a design system that can grow. The launch is the beginning of the product’s life.',
+    title: 'Built for the day after launch',
+    text: 'Clean code, documented decisions, and a design system your team can extend. The launch is the start of the product’s working life.',
   },
   {
     number: '04',
     title: 'Plain communication',
-    text: 'Clear scope, visible progress, and honest trade-offs. You should never need a translator to understand where a project stands.',
+    text: 'Clear scope, visible progress, honest trade-offs. You should always know where the project stands and what it needs from you.',
   },
 ];
 
@@ -496,19 +493,19 @@ export const faqs: FaqItem[] = [
     id: 'faq-start',
     question: 'How do we start a project?',
     answer:
-      'Send a short note through the inquiry form with the problem, who it affects, and what a good outcome would look like. We will follow up to arrange a short introductory call, then propose a scope and a way forward.',
+      'Send a short note with what is broken, who it affects, and what a good result would look like. We will arrange a short call, then send a written scope and a recommended way forward so you can decide with the full picture.',
   },
   {
     id: 'faq-types',
     question: 'What kinds of projects do you take on?',
     answer:
-      'Web applications, iOS and Android apps, brand identities, and combinations of the three. That includes new products, customer portals, internal tools, rebrands, and improving something that already exists.',
+      'Web applications, iOS and Android apps, brand identities, and combinations of them. That includes new products, customer portals, internal tools, rebrands, and fixing something that already exists but no longer works.',
   },
   {
     id: 'faq-existing',
     question: 'Can you work with our existing team or codebase?',
     answer:
-      'Yes. We start by reviewing what exists and where the friction is. From there we can work alongside an in-house team, take a defined slice of the product, or lead the whole build, whichever makes sense.',
+      'Yes. We start by reviewing what exists and where the friction is. From there we can work alongside your team, take a defined slice of the product, or lead the whole build, whichever solves the problem best.',
   },
   {
     id: 'faq-platforms',
@@ -543,11 +540,11 @@ export const faqs: FaqItem[] = [
 ];
 
 export const navLinks = [
-  { href: '#services', label: 'Services' },
-  { href: '#solutions', label: 'Solutions' },
-  { href: '#work', label: 'Work' },
-  { href: '#process', label: 'Process' },
-  { href: '#studio', label: 'Studio' },
-  { href: '#reviews', label: 'Reviews' },
-  { href: '#faq', label: 'FAQ' },
+  { href: '/services', label: 'Services' },
+  { href: '/solutions', label: 'Solutions' },
+  { href: '/work', label: 'Work' },
+  { href: '/process', label: 'Process' },
+  { href: '/studio', label: 'Studio' },
+  { href: '/reviews', label: 'Reviews' },
+  { href: '/faq', label: 'FAQ' },
 ];

@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { ArrowUpRight, Menu, X } from 'lucide-react';
 import { navLinks } from '../data/site';
+import { Link, useRoute } from '../lib/router';
 import { Wordmark, XMark } from './Wordmark';
 import './Header.css';
 
@@ -10,11 +11,14 @@ import './Header.css';
  * Desktop navigation is generated from `navLinks`; below 980px the same list
  * becomes a full-screen menu. The breakpoint lives in both `Header.css` and the
  * resize handler below, so change them together.
+ *
+ * The active item now follows the current page URL instead of a scroll spy,
+ * because each section has its own route.
  */
 export function Header() {
+  const { path } = useRoute();
   const [open, setOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
-  const [active, setActive] = useState('');
   const toggleRef = useRef<HTMLButtonElement>(null);
   const menuRef = useRef<HTMLDivElement>(null);
 
@@ -26,36 +30,7 @@ export function Header() {
     onScroll();
     window.addEventListener('scroll', onScroll, { passive: true });
     return () => window.removeEventListener('scroll', onScroll);
-  }, []);
-
-  // Scroll spy: highlight the nav item for the section crossing the middle
-  // third of the viewport. Tracking a Set (rather than acting only on
-  // `isIntersecting`) matters: without it the last section stayed highlighted
-  // after scrolling back to the top.
-  useEffect(() => {
-    if (!('IntersectionObserver' in window)) return;
-    const sections = navLinks
-      .map((link) => document.getElementById(link.href.slice(1)))
-      .filter((section): section is HTMLElement => Boolean(section));
-
-    const visible = new Set<string>();
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) visible.add(entry.target.id);
-          else visible.delete(entry.target.id);
-        });
-
-        // Keep nav order so the topmost section in view wins.
-        const current = sections.find((section) => visible.has(section.id));
-        setActive(current?.id ?? '');
-      },
-      { rootMargin: '-35% 0px -55% 0px', threshold: 0 },
-    );
-
-    sections.forEach((section) => observer.observe(section));
-    return () => observer.disconnect();
-  }, []);
+  }, [path]);
 
   /**
    * Mobile menu housekeeping.
@@ -106,30 +81,30 @@ export function Header() {
   return (
     <header className={`site-header${scrolled ? ' is-scrolled' : ''}${open ? ' is-menu-open' : ''}`}>
       <div className="container site-header__inner">
-        <a className="site-header__brand" href="#top" aria-label="TechX, back to top" onClick={close}>
+        <Link className="site-header__brand" href="/" aria-label="TechX, home" onClick={close}>
           <Wordmark />
-        </a>
+        </Link>
 
         <nav className="site-nav" aria-label="Primary">
           <ul>
             {navLinks.map((link) => (
               <li key={link.href}>
-                <a
+                <Link
                   href={link.href}
                   className="site-nav__link"
-                  aria-current={active === link.href.slice(1) ? 'location' : undefined}
+                  aria-current={path === link.href ? 'page' : undefined}
                 >
                   {link.label}
-                </a>
+                </Link>
               </li>
             ))}
           </ul>
         </nav>
 
-        <a className="btn btn--ink site-header__cta" href="#contact">
+        <Link className="btn btn--ink site-header__cta" href="/contact">
           Start a project
           <ArrowUpRight className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
-        </a>
+        </Link>
 
         <button
           ref={toggleRef}
@@ -155,22 +130,22 @@ export function Header() {
               <ul className="mobile-menu__list">
                 {navLinks.map((link, index) => (
                   <li key={link.href}>
-                    <a href={link.href} onClick={close}>
+                    <Link href={link.href} onClick={close} aria-current={path === link.href ? 'page' : undefined}>
                       <span className="mobile-menu__index">{String(index + 1).padStart(2, '0')}</span>
                       <span>{link.label}</span>
                       <ArrowUpRight className="mobile-menu__arrow" size={18} strokeWidth={1.8} aria-hidden="true" />
-                    </a>
+                    </Link>
                   </li>
                 ))}
               </ul>
             </nav>
 
             <div className="mobile-menu__foot">
-              <p className="micro">Technology &amp; creative studio for companies</p>
-              <a className="btn btn--bone" href="#contact" onClick={close}>
+              <p className="micro">We turn business problems into working products</p>
+              <Link className="btn btn--bone" href="/contact" onClick={close}>
                 Start a project
                 <ArrowUpRight className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
-              </a>
+              </Link>
             </div>
           </div>
         </div>

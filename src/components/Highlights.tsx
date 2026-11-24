@@ -1,5 +1,6 @@
 import { ArrowUpRight, Check } from 'lucide-react';
 import { site } from '../data/site';
+import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
 import './Highlights.css';
 
@@ -11,10 +12,11 @@ export function Highlights() {
       <div className="container">
         <div className="section-head section-head--center">
           <h2 className="section-title reveal" id="highlights-title" style={revealDelay(0)}>
-            Built for teams that want <em>clarity and momentum.</em>
+            Less friction in the work. <em>More clarity</em> in the decisions.
           </h2>
           <p className="section-lede reveal" style={revealDelay(1)}>
-            The strongest digital products are not just attractive. They are useful, usable, and designed to keep improving.
+            A new tool should remove the steps your team dreads, not add another thing to manage.
+            Here is how we get there.
           </p>
         </div>
 
@@ -52,11 +54,11 @@ export function Highlights() {
         </div>
 
         <div className="highlights__cta reveal" style={revealDelay(2)}>
-          <p>Need a better product story, a smarter interface, or a launch plan you can trust?</p>
-          <a className="btn btn--accent" href="#contact">
-            Book a discovery call
+          <p>Know what is broken but not sure what to build? Start with a short conversation.</p>
+          <Link className="btn btn--accent" href="/contact">
+            Talk through your problem
             <ArrowUpRight className="btn__icon" size={17} strokeWidth={2} aria-hidden="true" />
-          </a>
+          </Link>
         </div>
       </div>
     </section>

@@ -253,6 +253,13 @@ export function Contact({ preselect }: ContactProps) {
   const [copied, setCopied] = useState<CopyStatus>('idle');
   const [summary, setSummary] = useState('');
 
+  // The hero email field hands its value over through the URL, so the visitor
+  // does not have to type it twice on the contact page.
+  useEffect(() => {
+    const email = new URLSearchParams(window.location.search).get('email');
+    if (email) setValues((current) => ({ ...current, email }));
+  }, []);
+
   // Merge a service choice made elsewhere on the page into the inquiry.
   useEffect(() => {
     if (!preselect) return;
@@ -441,11 +448,11 @@ export function Contact({ preselect }: ContactProps) {
       <div className="container contact__layout">
         <div className="contact__intro">
           <h2 className="section-title reveal" id="contact-title" style={revealDelay(1)}>
-            Tell us what you are trying to <em>make.</em>
+            Describe the <em>problem.</em>
           </h2>
           <p className="contact__lede reveal" style={revealDelay(2)}>
-            A short note is enough to begin. Share the problem, who it affects, and what a good
-            outcome would look like. We will reply with next steps or a few useful questions.
+            A short note is enough. Tell us what is getting in the way, who it affects, and what a
+            good outcome looks like. We will reply with a practical next step.
           </p>
 
           <div className="contact__next reveal" style={revealDelay(3)}>
@@ -455,10 +462,10 @@ export function Contact({ preselect }: ContactProps) {
                 <span>01</span> We read your note and come back with questions.
               </li>
               <li>
-                <span>02</span> A short conversation about the problem and constraints.
+                <span>02</span> A short call to understand the problem and the constraints.
               </li>
               <li>
-                <span>03</span> A proposed scope, approach, and next step.
+                <span>03</span> A written scope, approach, and a clear next step.
               </li>
             </ol>
           </div>

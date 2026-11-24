@@ -1,0 +1,25 @@
+/* ==========================================================================
+   Secondary pages · 404
+   ========================================================================== */
+
+.not-found {
+  min-height: 60vh;
+  display: grid;
+  align-items: center;
+}
+
+.not-found__inner {
+  max-width: 720px;
+}
+
+.not-found__inner .section-lede {
+  margin-top: 24px;
+}
+
+.not-found__actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 24px;
+  margin-top: 34px;
+}
