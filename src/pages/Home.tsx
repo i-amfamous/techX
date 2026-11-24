@@ -1,5 +1,5 @@
 import { ArrowUpRight } from 'lucide-react';
-import { Hero, Ticker } from '../components/Hero';
+import { Hero, HeroAssurance, Ticker } from '../components/Hero';
 import { Highlights } from '../components/Highlights';
 import { Link } from '../lib/router';
 import { revealDelay, useReveal } from '../lib/useReveal';
@@ -69,6 +69,7 @@ export function Home() {
   return (
     <>
       <Hero />
+      <HeroAssurance />
       <Ticker />
       <Highlights />
 

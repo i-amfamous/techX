@@ -2,65 +2,91 @@ import { useEffect, useState, type CSSProperties, type FormEvent } from 'react';
 import { ArrowRight, ArrowUpRight, CheckCircle2 } from 'lucide-react';
 import { projects, site } from '../data/site';
 import { Link, useNavigate } from '../lib/router';
-import { useReveal } from '../lib/useReveal';
+import { revealDelay, useReveal } from '../lib/useReveal';
 import { XMark } from './Wordmark';
 import './Hero.css';
 
 /**
  * Hero and the capability ticker that follows it.
  *
- * The hero uses a split layout: product-style copy and CTA on the left, and a
- * single real project image on the right. Using a live project instead of a
- * drawn mockup keeps the opening honest and gives the work immediate proof.
+ * The hero is image led: one large live project preview with two smaller live
+ * products layered around it. Real screenshots keep the opening honest and give
+ * visitors something concrete to judge before they scroll.
  */
 
-const featuredProject = projects.find((project) => project.id === 'famous-techx');
+const byId = (id: string) => projects.find((project) => project.id === id);
+const featuredProject = byId('famous-techx');
+const supportingProjects = [byId('famous-techx-pos'), byId('premium-academy')].filter(
+  (project): project is NonNullable<typeof project> => Boolean(project),
+);
 
 /**
- * Product preview built around one real project image.
+ * Layered product showcase.
  *
- * The browser-style window and the small proof card are the two patterns that
- * recur across the strongest product heroes: a believable preview of the work,
- * plus a reason to trust it before the visitor scrolls.
+ * A believable browser preview, two real supporting products, and a small
+ * proof card. The patterns recur across the strongest product heroes: show the
+ * work, then give the visitor a reason to trust it before scrolling.
  */
 function HeroVisual() {
   return (
     <figure className="hero-visual">
       <span className="hero-visual__glow" aria-hidden="true" />
 
-      <div className="hero-visual__window">
-        <div className="hero-visual__chrome">
-          <span className="hero-visual__dots" aria-hidden="true">
-            <i />
-            <i />
-            <i />
-          </span>
-          <span className="hero-visual__url">famoustechx.onrender.com</span>
-          <span className="hero-visual__chrome-mark" aria-hidden="true">
-            <XMark />
-          </span>
+      <div className="hero-visual__stage">
+        <div className="hero-visual__window">
+          <div className="hero-visual__chrome">
+            <span className="hero-visual__dots" aria-hidden="true">
+              <i />
+              <i />
+              <i />
+            </span>
+            <span className="hero-visual__url">famoustechx.onrender.com</span>
+            <span className="hero-visual__chrome-mark" aria-hidden="true">
+              <XMark />
+            </span>
+          </div>
+
+          <div className="hero-visual__screen">
+            <img
+              className="hero-visual__image"
+              src={featuredProject?.image ?? '/work/famous-techx.jpg'}
+              alt={featuredProject?.imageAlt ?? 'Famous TechX school management platform'}
+              width="900"
+              height="604"
+              decoding="async"
+            />
+          </div>
         </div>
 
-        <div className="hero-visual__screen">
-          <img
-            className="hero-visual__image"
-            src={featuredProject?.image ?? '/work/famous-techx.jpg'}
-            alt={featuredProject?.imageAlt ?? 'Famous TechX school management platform'}
-            width="900"
-            height="604"
-            decoding="async"
-          />
-        </div>
-      </div>
+        {supportingProjects.map((project, index) => (
+          <div
+            className={`hero-visual__mini hero-visual__mini--${index + 1}`}
+            key={project.id}
+          >
+            <div className="hero-visual__mini-head">
+              <span className="hero-visual__mini-dot" aria-hidden="true" />
+              <span>{project.title}</span>
+            </div>
+            <img
+              src={project.image}
+              alt={project.imageAlt}
+              width="900"
+              height="604"
+              loading="lazy"
+              decoding="async"
+            />
+          </div>
+        ))}
 
-      <div className="hero-visual__proof">
-        <span className="hero-visual__proof-icon">
-          <CheckCircle2 size={18} strokeWidth={2.2} aria-hidden="true" />
-        </span>
-        <span className="hero-visual__proof-copy">
-          <strong>Live and in use</strong>
-          <small>{featuredProject?.subtitle ?? 'School management platform'}</small>
-        </span>
+        <div className="hero-visual__proof">
+          <span className="hero-visual__proof-icon">
+            <CheckCircle2 size={18} strokeWidth={2.2} aria-hidden="true" />
+          </span>
+          <span className="hero-visual__proof-copy">
+            <strong>Live and in use</strong>
+            <small>{featuredProject?.subtitle ?? 'School management platform'}</small>
+          </span>
+        </div>
       </div>
 
       <figcaption className="hero-visual__caption">
@@ -147,29 +173,47 @@ export function Hero() {
             </button>
           </form>
 
-          <div className="hero__actions-row">
-            <Link className="text-link hero__secondary" href={site.hero.secondaryCta.href}>
-              {site.hero.secondaryCta.label}
-              <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
-            </Link>
-            {site.hero.finePrint ? <p className="hero__fineprint">{site.hero.finePrint}</p> : null}
-          </div>
-
-          {site.hero.trust?.length ? (
-            <ul className="hero__trust" aria-label="What to expect">
-              {site.hero.trust.map((item) => (
-                <li key={item}>
-                  <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" />
-                  <span>{item}</span>
-                </li>
-              ))}
-            </ul>
-          ) : null}
         </div>
 
         <div className="hero__visual-wrap" style={visualStyle}>
           <HeroVisual />
         </div>
+      </div>
+    </section>
+  );
+}
+
+/**
+ * Quiet proof strip directly beneath the hero.
+ *
+ * The secondary link, availability note, and reassurance points used to sit
+ * under the email field. Moving them here keeps the opening focused while the
+ * details stay close enough to be useful before the visitor scrolls on.
+ */
+export function HeroAssurance() {
+  const ref = useReveal<HTMLElement>();
+
+  return (
+    <section className="hero-assurance" ref={ref} aria-label="What to expect from TechX">
+      <div className="container hero-assurance__inner">
+        <div className="hero-assurance__intro reveal">
+          <Link className="text-link" href={site.hero.secondaryCta.href}>
+            {site.hero.secondaryCta.label}
+            <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
+          </Link>
+          {site.hero.finePrint ? <p className="micro">{site.hero.finePrint}</p> : null}
+        </div>
+
+        {site.hero.trust?.length ? (
+          <ul className="hero-assurance__list">
+            {site.hero.trust.map((item, index) => (
+              <li className="reveal" key={item} style={revealDelay(index)}>
+                <CheckCircle2 size={16} strokeWidth={2} aria-hidden="true" />
+                <span>{item}</span>
+              </li>
+            ))}
+          </ul>
+        ) : null}
       </div>
     </section>
   );

@@ -1,5 +1,20 @@
-import type { ReactNode } from 'react';
-import { ArrowUpRight, Globe, Palette, Quote, Smartphone } from 'lucide-react';
+import { useEffect, useState, type ReactNode } from 'react';
+import {
+  ArrowUpRight,
+  Code2,
+  Compass,
+  GraduationCap,
+  Globe,
+  Layers3,
+  Palette,
+  Quote,
+  Rocket,
+  ShoppingBag,
+  Smartphone,
+  Sprout,
+  Store,
+  type LucideIcon,
+} from 'lucide-react';
 import {
   faqs,
   processSteps,
@@ -69,6 +84,209 @@ function HeroArtWindow({
   );
 }
 
+/**
+ * Work hero: the projects become the backdrop and the story.
+ *
+ * The live screenshot fills the hero, a strong gradient keeps the copy readable,
+ * and the panel below the headline explains the project currently on screen.
+ * The filmstrip at the bottom both previews every project and controls the loop.
+ */
+const SLIDE_MS = 4200;
+
+const projectIcons: Record<string, LucideIcon> = {
+  swiftek: ShoppingBag,
+  agricweb: Sprout,
+  'premium-academy': GraduationCap,
+  'famous-techx': Layers3,
+  'famous-techx-pos': Store,
+};
+
+function WorkHero({ title, lede, actions, note }: Omit<PageHeroProps, 'variant'>) {
+  const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
+  const [focused, setFocused] = useState(false);
+  const paused = hovered || focused;
+  const current = projects[active] ?? projects[0];
+  const ActiveIcon = current ? projectIcons[current.id] ?? Layers3 : Layers3;
+
+  useEffect(() => {
+    if (paused || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const timer = window.setInterval(
+      () => setActive((index) => (index + 1) % projects.length),
+      SLIDE_MS,
+    );
+    return () => window.clearInterval(timer);
+  }, [paused]);
+
+  return (
+    <section
+      className={`page-hero page-hero--work work-hero${paused ? ' is-paused' : ''}`}
+      aria-labelledby="page-hero-title"
+      onMouseEnter={() => setHovered(true)}
+      onMouseLeave={() => setHovered(false)}
+      onFocusCapture={() => setFocused(true)}
+      onBlurCapture={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) setFocused(false);
+      }}
+    >
+      <div className="work-hero__media" aria-hidden="true">
+        {projects.map((project, index) => (
+          <img
+            key={project.id}
+            className={`work-hero__image${index === active ? ' is-active' : ''}`}
+            src={project.image}
+            alt=""
+            width="900"
+            height="604"
+            decoding="async"
+          />
+        ))}
+        <span className="work-hero__tint" />
+        <span className="work-hero__shade" />
+      </div>
+
+      <div className="container work-hero__inner">
+        <div className="work-hero__copy">
+          <h1 className="page-hero__title" id="page-hero-title">
+            {title}
+          </h1>
+          <p className="page-hero__lede work-hero__lede">{lede}</p>
+
+          {current ? (
+            <div className="work-hero__project">
+              <div className="work-hero__project-head">
+                <span className="work-hero__project-icon" aria-hidden="true">
+                  <ActiveIcon size={18} strokeWidth={1.9} />
+                </span>
+                <div>
+                  <h2 className="work-hero__project-title">{current.title}</h2>
+                  <p className="work-hero__project-type">{current.subtitle}</p>
+                </div>
+              </div>
+
+              <p className="work-hero__project-text">{current.description}</p>
+
+              <div className="work-hero__tags">
+                {current.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+
+              <a className="work-hero__visit" href={current.url} target="_blank" rel="noreferrer">
+                Open live project
+                <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
+              </a>
+            </div>
+          ) : null}
+
+          {actions?.length ? (
+            <div className="page-hero__actions">
+              {actions.map((action) =>
+                action.primary ? (
+                  <Link key={action.href} className="btn btn--ink" href={action.href}>
+                    {action.label}
+                    <ArrowUpRight className="btn__icon" size={16} strokeWidth={2} aria-hidden="true" />
+                  </Link>
+                ) : (
+                  <Link key={action.href} className="text-link" href={action.href}>
+                    {action.label}
+                    <ArrowUpRight size={15} strokeWidth={2} aria-hidden="true" />
+                  </Link>
+                ),
+              )}
+            </div>
+          ) : null}
+
+          {note ? <p className="page-hero__note">{note}</p> : null}
+        </div>
+      </div>
+
+      <div className="work-hero__rail">
+        <div className="container work-hero__rail-inner">
+          <div className="work-hero__thumbs" role="group" aria-label="Choose a project">
+            {projects.map((project, index) => {
+              const Icon = projectIcons[project.id] ?? Layers3;
+              return (
+                <button
+                  type="button"
+                  className={`work-hero__thumb${index === active ? ' is-active' : ''}`}
+                  key={project.id}
+                  onClick={() => setActive(index)}
+                  aria-label={`Show ${project.title}`}
+                  aria-pressed={index === active}
+                >
+                  <img src={project.image} alt="" width="900" height="604" decoding="async" />
+                  <span className="work-hero__thumb-icon" aria-hidden="true">
+                    <Icon size={12} strokeWidth={2} />
+                  </span>
+                </button>
+              );
+            })}
+          </div>
+
+          <span className="work-hero__rail-note">
+            <span className="hero-art__live-dot" aria-hidden="true" />
+            Live and in use
+          </span>
+
+          <span
+            className="work-hero__progress"
+            key={`progress-${active}-${paused}`}
+            aria-hidden="true"
+          />
+        </div>
+      </div>
+    </section>
+  );
+}
+
+const studioOrbit = [
+  { Icon: Compass, title: 'Discovery', detail: 'Find the real problem' },
+  { Icon: Palette, title: 'Design', detail: 'Make it clear and usable' },
+  { Icon: Code2, title: 'Engineering', detail: 'Build it to last' },
+  { Icon: Rocket, title: 'Launch', detail: 'Ship, support, hand over' },
+];
+
+/**
+ * Studio hero: one centre, four orbiting disciplines.
+ *
+ * Inspired by creative studio heroes that surround a central wordmark with
+ * illustrated characters, this uses the TechX mark and four small discipline
+ * cards. It says the same thing with the studio's own visual language.
+ */
+function StudioHeroArt() {
+  return (
+    <div className="studio-art">
+      <span className="studio-art__ring" aria-hidden="true" />
+
+      <div className="studio-art__center">
+        <span className="studio-art__mark" aria-hidden="true">
+          <XMark />
+        </span>
+        <strong>TechX</strong>
+        <small>One studio, one team</small>
+      </div>
+
+      {studioOrbit.map(({ Icon, title, detail }, index) => (
+        <div className={`studio-art__chip studio-art__chip--${index + 1}`} key={title}>
+          <span className="studio-art__chip-icon" aria-hidden="true">
+            <Icon size={17} strokeWidth={1.8} />
+          </span>
+          <span className="studio-art__chip-copy">
+            <strong>{title}</strong>
+            <small>{detail}</small>
+          </span>
+        </div>
+      ))}
+
+      <div className="studio-art__foot">
+        <Layers3 size={15} strokeWidth={1.8} aria-hidden="true" />
+        <span>The people you talk to build the work.</span>
+      </div>
+    </div>
+  );
+}
+
 function PageHeroVisual({ variant }: { variant: PageHeroVariant }) {
   switch (variant) {
     case 'services':
@@ -112,28 +330,7 @@ function PageHeroVisual({ variant }: { variant: PageHeroVariant }) {
       );
 
     case 'work':
-      return (
-        <HeroArtWindow label="Live projects" flush>
-          <div className="hero-art__shots">
-            <img
-              src={projects[3]?.image}
-              alt="Famous TechX school management platform"
-              width="900"
-              height="604"
-            />
-            <img
-              src={projects[0]?.image}
-              alt="SwifTek Accessories online store"
-              width="900"
-              height="604"
-            />
-          </div>
-          <span className="hero-art__work-badge">
-            <span className="hero-art__live-dot" />
-            Live and in use
-          </span>
-        </HeroArtWindow>
-      );
+      return null;
 
     case 'process':
       return (
@@ -150,26 +347,7 @@ function PageHeroVisual({ variant }: { variant: PageHeroVariant }) {
       );
 
     case 'studio':
-      return (
-        <HeroArtWindow label="One studio">
-          <div className="hero-art__pair">
-            <div className="hero-art__half">
-              <span>01</span>
-              <strong>Design</strong>
-              <small>Clarity, structure, taste</small>
-            </div>
-            <span className="hero-art__x">
-              <XMark />
-            </span>
-            <div className="hero-art__half">
-              <span>02</span>
-              <strong>Engineering</strong>
-              <small>Build, test, support</small>
-            </div>
-          </div>
-          <p className="hero-art__foot">One conversation, one team.</p>
-        </HeroArtWindow>
-      );
+      return <StudioHeroArt />;
 
     case 'reviews':
       return (
@@ -231,6 +409,10 @@ interface PageHeroProps {
 }
 
 export function PageHero({ variant, title, lede, actions, note }: PageHeroProps) {
+  if (variant === 'work') {
+    return <WorkHero title={title} lede={lede} actions={actions} note={note} />;
+  }
+
   return (
     <section className={`page-hero page-hero--${variant}`} aria-labelledby="page-hero-title">
       <div className="container page-hero__inner">
